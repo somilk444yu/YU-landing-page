@@ -369,10 +369,157 @@
             }
         }
 
-        /* ENHANCED MOBILE OPTIMIZATIONS */
+        /* ===========================================
+           COMPREHENSIVE MOBILE & TABLET OPTIMIZATIONS
+           =========================================== */
+
+        /* TABLET BREAKPOINT */
+        @media (max-width: 1024px) {
+
+            /* Stack grids on tablet */
+            [style*="gridTemplateColumns"] {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* MOBILE BREAKPOINT */
+        @media (max-width: 768px) {
+
+            /* Center ALL content on mobile */
+            section>div {
+                text-align: center !important;
+            }
+
+            /* Stack all grids vertically */
+            [style*="display: grid"],
+            [style*="display:grid"] {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+
+            /* Center text containers */
+            [style*="maxWidth"] {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                text-align: center !important;
+            }
+
+            /* Fix the "Who Needs YU" section cards */
+            [style*="borderLeft: 3px"] {
+                border-left: none !important;
+                border-top: 3px solid inherit !important;
+                text-align: center !important;
+            }
+
+            /* Center feature icons */
+            [style*="borderRadius: '50%'"],
+            [style*="borderRadius: 50%"] {
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* Reduce decorative element visibility on mobile */
+            [style*="filter: blur"] {
+                opacity: 0.3 !important;
+            }
+
+            /* Better section padding */
+            section {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
+
+            /* Center headings */
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                text-align: center !important;
+                width: 100% !important;
+            }
+
+            /* Center paragraphs */
+            p {
+                text-align: center !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* Full width cards */
+            [style*="padding: '2.5rem'"],
+            [style*="padding: '3rem'"],
+            [style*="padding: '4rem'"] {
+                width: 100% !important;
+            }
+
+            /* Fix product image section */
+            [style*="order: 2"],
+            [style*="order: 1"] {
+                order: unset !important;
+            }
+
+            /* Form improvements */
+            form {
+                padding: 1.5rem !important;
+                border-radius: 2rem !important;
+                width: 100% !important;
+            }
+
+            input,
+            select {
+                padding: 1.25rem 1.5rem !important;
+                font-size: 16px !important;
+                /* Prevents iOS zoom */
+                width: 100% !important;
+            }
+
+            button[type="submit"] {
+                padding: 1.5rem !important;
+            }
+
+            /* FAQ items full width and centered */
+            .faq-item {
+                width: 100% !important;
+                text-align: left !important;
+            }
+
+            .faq-question {
+                font-size: 1rem !important;
+            }
+
+            .faq-answer {
+                font-size: 0.875rem !important;
+                text-align: left !important;
+            }
+
+            /* Product image centered */
+            img {
+                display: block !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* Reduce vertical spacing on mobile */
+            section {
+                padding-top: 4rem !important;
+                padding-bottom: 4rem !important;
+            }
+
+            /* Stats grid stays horizontal */
+            [style*="gridTemplateColumns: 'repeat(2, 1fr)'"] {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+
+        /* SMALL PHONES */
         @media (max-width: 480px) {
 
-            /* Smaller headlines on very small phones */
+            /* Even smaller headlines */
             h1,
             h2,
             h3 {
@@ -388,20 +535,26 @@
                 min-height: 44px;
             }
 
-            /* Reduce padding on mobile */
+            /* Tighter padding */
             section {
                 padding-left: 1rem !important;
                 padding-right: 1rem !important;
             }
 
-            /* FAQ improvements for mobile */
+            /* Smaller FAQ text */
             .faq-question {
-                font-size: 1rem !important;
+                font-size: 0.95rem !important;
                 padding-right: 0.5rem;
             }
 
             .faq-answer {
-                font-size: 0.875rem;
+                font-size: 0.8rem;
+            }
+
+            /* Hide heavy decorative elements on very small screens */
+            [style*="filter: blur(120px)"],
+            [style*="filter: blur(200px)"] {
+                display: none !important;
             }
         }
 
@@ -409,7 +562,11 @@
 
             /* Extra small phones */
             .faq-question {
-                font-size: 0.9rem !important;
+                font-size: 0.85rem !important;
+            }
+
+            h2 {
+                font-size: 1.75rem !important;
             }
         }
 
@@ -447,25 +604,6 @@
 
         .scroll-indicator.hidden {
             opacity: 0;
-        }
-
-        /* Improved form styling for mobile */
-        @media (max-width: 768px) {
-            form {
-                padding: 1.5rem !important;
-                border-radius: 2rem !important;
-            }
-
-            input,
-            select {
-                padding: 1.25rem 1.5rem !important;
-                font-size: 16px !important;
-                /* Prevents iOS zoom */
-            }
-
-            button[type="submit"] {
-                padding: 1.5rem !important;
-            }
         }
 
         /* Better spacing between sections on mobile */
@@ -1227,7 +1365,7 @@
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                     <span style={{ color: '#3b82f6', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', fontSize: '10px' }}>Hardware // Batch 001</span>
-                                    <h2 style={{ fontSize: 'clamp(5rem, 12vw, 12rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 1, fontStyle: 'italic' }}>
+                                    <h2 style={{ fontSize: 'clamp(3rem, 10vw, 12rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 1, fontStyle: 'italic' }}>
                                         YU<span style={{ color: '#3b82f6' }}>.</span>
                                     </h2>
                                 </div>
