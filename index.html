@@ -1077,7 +1077,7 @@
             const [isReserved, setIsReserved] = useState(false);
 
             const [formData, setFormData] = useState({
-                name: '', email: '', phone: '', country: '', state: '', city: ''
+                name: '', email: '', phone: '', country: '', state: '', city: '', interest: ''
             });
 
             const [errors, setErrors] = useState({});
@@ -1717,7 +1717,59 @@
                                 <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: 'clamp(10px, 1vw, 12px)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.6em' }}>
                                     Batch 001 Reservation Database
                                 </p>
+
+                                {/* Limited Batch Urgency Banner */}
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    gap: '1rem',
+                                    marginTop: '1.5rem',
+                                    padding: '1.5rem 2rem',
+                                    background: 'linear-gradient(135deg, rgba(239,68,68,0.1) 0%, rgba(37,99,235,0.1) 100%)',
+                                    border: '1px solid rgba(239,68,68,0.3)',
+                                    borderRadius: '1rem'
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                        <span style={{
+                                            display: 'inline-block',
+                                            width: '10px',
+                                            height: '10px',
+                                            background: '#ef4444',
+                                            borderRadius: '50%',
+                                            animation: 'pulse 2s infinite'
+                                        }} />
+                                        <span style={{
+                                            color: '#ef4444',
+                                            fontWeight: 900,
+                                            textTransform: 'uppercase',
+                                            letterSpacing: '0.15em',
+                                            fontSize: '0.875rem'
+                                        }}>
+                                            Limited Edition
+                                        </span>
+                                    </div>
+                                    <p style={{
+                                        color: 'white',
+                                        fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
+                                        fontWeight: 900,
+                                        fontStyle: 'italic',
+                                        letterSpacing: '-0.02em'
+                                    }}>
+                                        Only <span style={{ color: '#3b82f6' }}>1,000 Units</span> Available
+                                    </p>
+                                    <p style={{
+                                        color: 'rgba(255,255,255,0.6)',
+                                        fontSize: '0.8rem',
+                                        maxWidth: '24rem',
+                                        lineHeight: 1.6
+                                    }}>
+                                        Batch 001 is exclusively reserved for members who pre-book and show interest.
+                                        Once filled, registration closes until Batch 002.
+                                    </p>
+                                </div>
                             </div>
+
 
                             {!isReserved ? (
                                 <form onSubmit={handleSubmit} style={{
@@ -1931,6 +1983,38 @@
                                                     }}
                                                 />
                                             )}
+                                        </div>
+
+                                        {/* Interest Dropdown - What interests you most? */}
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', gridColumn: 'span 2' }}>
+                                            <label style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginLeft: '0.5rem' }}>
+                                                Interest // What excites you about YU?
+                                            </label>
+                                            <select
+                                                name="interest"
+                                                value={formData.interest}
+                                                onChange={handleInputChange}
+                                                style={{
+                                                    width: '100%',
+                                                    padding: '1.5rem 2rem',
+                                                    background: 'black',
+                                                    border: '1px solid rgba(255,255,255,0.1)',
+                                                    borderRadius: '9999px',
+                                                    outline: 'none',
+                                                    color: 'white',
+                                                    fontSize: '1rem',
+                                                    appearance: 'none',
+                                                    cursor: 'pointer'
+                                                }}
+                                            >
+                                                <option value="">Select Your Primary Interest</option>
+                                                <option value="fitness">⚡ Fitness & Athletic Performance</option>
+                                                <option value="urban">🏙️ Urban Air Quality & Pollution Defense</option>
+                                                <option value="skincare">✨ Skincare & Beauty</option>
+                                                <option value="wellness">🧘 Stress Relief & Relaxation</option>
+                                                <option value="respiratory">💨 Respiratory Support</option>
+                                                <option value="gifting">🎁 Gifting for Loved Ones</option>
+                                            </select>
                                         </div>
                                     </div>
 
