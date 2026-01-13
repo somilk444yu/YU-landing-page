@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YU — The Final Biological Upgrade</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="YU System 01: 99% Pure Medical-Grade Oxygen. The final biological upgrade for peak performance, urban protection, and cellular regeneration. A wellness product for those who demand more from life.">
+    <meta name="keywords"
+        content="portable oxygen, medical grade oxygen, YU oxygen, breathing system, wellness technology, oxygen therapy, wellness gift, pure oxygen">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <!-- React and Babel -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #050505;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: #2563eb;
+            color: white;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 2rem center;
+            background-size: 1rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            letter-spacing: -0.05em;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animate-spin {
+            animation: spin 10s linear infinite;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .animate-bounce {
+            animation: bounce 1s infinite;
+        }
+
+        .animate-spin-loader {
+            animation: spin 1s linear infinite;
+        }
+
+        /* ENHANCED OXYGEN PARTICLE EFFECTS */
+        .oxygen-particle {
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 1) 0%, rgba(59, 130, 246, 0.6) 40%, rgba(37, 99, 235, 0.3) 70%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            filter: blur(2px);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .oxygen-particle-large {
+            width: 28px;
+            height: 28px;
+            background: radial-gradient(circle, rgba(147, 197, 253, 0.9) 0%, rgba(96, 165, 250, 0.6) 30%, rgba(59, 130, 246, 0.4) 60%, transparent 100%);
+            filter: blur(3px);
+            box-shadow: 0 0 30px rgba(96, 165, 250, 0.6), 0 0 60px rgba(59, 130, 246, 0.4);
+        }
+
+        .oxygen-burst {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, rgba(147, 197, 253, 1) 0%, rgba(96, 165, 250, 0.8) 40%, rgba(59, 130, 246, 0.5) 70%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            animation: burstFade 1.5s ease-out forwards;
+            box-shadow: 0 0 25px rgba(96, 165, 250, 0.8);
+        }
+
+        @keyframes burstFade {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+
+            5% {
+                opacity: 0.8;
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(-50vh) translateX(calc(var(--drift) * 0.5)) rotate(180deg) scale(1);
+            }
+
+            95% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-100vh) translateX(var(--drift)) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatSide {
+            0% {
+                transform: translateX(0) translateY(0) scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateX(calc(var(--drift-x) * 0.5)) translateY(calc(var(--drift-y) * 0.5)) scale(1.2);
+            }
+
+            100% {
+                transform: translateX(var(--drift-x)) translateY(var(--drift-y)) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        @keyframes breathePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: scale(1.3);
+                opacity: 1;
+            }
+        }
+
+        @keyframes rippleExpand {
+            0% {
+                transform: scale(0);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes waveFlow {
+            0% {
+                transform: translateX(-100%) translateY(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateX(100vw) translateY(var(--wave-y));
+                opacity: 0;
+            }
+        }
+
+        .ambient-particle {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.8) 0%, rgba(59, 130, 246, 0.5) 50%, transparent 80%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            filter: blur(2px);
+            animation: floatUp var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.6) 0%, rgba(59, 130, 246, 0.3) 40%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9997;
+            filter: blur(5px);
+            transition: transform 0.1s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .scroll-particle {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(147, 197, 253, 0.9) 0%, rgba(96, 165, 250, 0.6) 40%, rgba(59, 130, 246, 0.4) 70%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9996;
+            filter: blur(3px);
+            animation: floatSide 2.5s ease-out forwards;
+            box-shadow: 0 0 25px rgba(96, 165, 250, 0.6);
+        }
+
+        .oxygen-cloud {
+            position: fixed;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.15) 40%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            filter: blur(30px);
+            animation: breathePulse 4s ease-in-out infinite;
+            animation-delay: var(--delay);
+        }
+
+        .oxygen-ripple {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            border: 3px solid rgba(96, 165, 250, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9995;
+            animation: rippleExpand 1.5s ease-out forwards;
+        }
+
+        .oxygen-wave {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(ellipse, rgba(96, 165, 250, 0.4) 0%, rgba(59, 130, 246, 0.2) 50%, transparent 80%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            filter: blur(20px);
+            animation: waveFlow 3s linear forwards;
+        }
+
+        .breathing-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+
+        /* NAVIGATION STYLES */
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #3b82f6;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+        }
+
+        /* FAQ ACCORDION STYLES */
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2rem 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            background: rgba(37, 99, 235, 0.02);
+            padding-left: 1rem;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-top: 1.5rem;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+            font-size: 1.5rem;
+            color: #3b82f6;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* CHATBOT STYLES */
+        .chatbot-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .chatbot-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.6);
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 380px;
+            max-width: calc(100vw - 4rem);
+            height: 500px;
+            background: #09090b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chatbot-input-area {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .chat-message {
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            max-width: 80%;
+            line-height: 1.6;
+            font-size: 0.875rem;
+        }
+
+        .chat-message.user {
+            background: #2563eb;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        .chat-message.bot {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.9);
+            align-self: flex-start;
+            border-bottom-left-radius: 0.25rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fixed Header with Logo and Navigation -->
+    <header
+        style="position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(5,5,5,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1rem 2rem;">
+        <div
+            style="max-width: 80rem; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+            <img src="assets/logo.jpg" alt="YU O2 Logo" style="height: 50px; width: auto;" />
+
+            <!-- Navigation Menu -->
+            <nav class="nav-menu">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#benefits" class="nav-link">Benefits</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+            </nav>
+
+            <a href="#prebook"
+                style="color: white; text-decoration: none; font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.75rem 1.5rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 9999px; transition: all 0.3s; display: inline-block;"
+                onmouseover="this.style.background='#2563eb'; this.style.borderColor='#2563eb';"
+                onmouseout="this.style.background='transparent'; this.style.borderColor='rgba(255,255,255,0.2)';">Reserve
+                Now</a>
+        </div>
+    </header>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Firebase Configuration - Replace with your actual config
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        let app, auth, db;
+        try {
+            app = firebase.initializeApp(firebaseConfig);
+            auth = firebase.auth();
+            db = firebase.firestore();
+        } catch (error) {
+            console.warn("Firebase initialization skipped - using demo mode");
+        }
+
+        const appId = 'yu-oxygen-app';
+
+        // Comprehensive Global Country Data
+        const COUNTRY_DATA = {
+            "Afghanistan": { code: "+93", states: { "Kabul": ["Kabul City"], "Herat": ["Herat City"] } },
+            "Albania": { code: "+355", states: { "Tirana": ["Tirana City"], "Durrës": ["Durrës City"] } },
+            "Algeria": { code: "+213", states: { "Algiers": ["Algiers City"], "Oran": ["Oran City"] } },
+            "Argentina": { code: "+54", states: { "Buenos Aires": ["Buenos Aires City", "La Plata"], "Córdoba": ["Córdoba City"] } },
+            "Australia": {
+                code: "+61", states: {
+                    "New South Wales": ["Sydney", "Newcastle", "Wollongong"],
+                    "Victoria": ["Melbourne", "Geelong", "Ballarat"],
+                    "Queensland": ["Brisbane", "Gold Coast", "Cairns"],
+                    "Western Australia": ["Perth", "Fremantle"],
+                    "South Australia": ["Adelaide"],
+                    "Tasmania": ["Hobart"]
+                }
+            },
+            "Austria": { code: "+43", states: { "Vienna": ["Vienna City"], "Salzburg": ["Salzburg City"], "Tyrol": ["Innsbruck"] } },
+            "Bahrain": { code: "+973", states: { "Capital": ["Manama"] } },
+            "Bangladesh": { code: "+880", states: { "Dhaka": ["Dhaka City"], "Chittagong": ["Chittagong City"], "Khulna": ["Khulna City"] } },
+            "Belgium": { code: "+32", states: { "Brussels": ["Brussels City"], "Antwerp": ["Antwerp City"], "Flemish Brabant": ["Leuven"] } },
+            "Brazil": {
+                code: "+55", states: {
+                    "São Paulo": ["São Paulo City", "Campinas", "Santos"],
+                    "Rio de Janeiro": ["Rio de Janeiro City", "Niterói"],
+                    "Minas Gerais": ["Belo Horizonte"],
+                    "Bahia": ["Salvador"],
+                    "Brasília": ["Brasília City"]
+                }
+            },
+            "Bulgaria": { code: "+359", states: { "Sofia": ["Sofia City"], "Plovdiv": ["Plovdiv City"], "Varna": ["Varna City"] } },
+            "Canada": {
+                code: "+1", states: {
+                    "Ontario": ["Toronto", "Ottawa", "Mississauga", "Hamilton", "London"],
+                    "Quebec": ["Montreal", "Quebec City", "Laval"],
+                    "British Columbia": ["Vancouver", "Victoria", "Surrey", "Burnaby"],
+                    "Alberta": ["Calgary", "Edmonton", "Red Deer"],
+                    "Manitoba": ["Winnipeg"],
+                    "Saskatchewan": ["Regina", "Saskatoon"],
+                    "Nova Scotia": ["Halifax"]
+                }
+            },
+            "Chile": { code: "+56", states: { "Santiago": ["Santiago City"], "Valparaíso": ["Valparaíso City", "Viña del Mar"] } },
+            "China": {
+                code: "+86", states: {
+                    "Beijing": ["Beijing City"],
+                    "Shanghai": ["Shanghai City"],
+                    "Guangdong": ["Guangzhou", "Shenzhen", "Dongguan"],
+                    "Zhejiang": ["Hangzhou", "Ningbo"],
+                    "Jiangsu": ["Nanjing", "Suzhou"],
+                    "Sichuan": ["Chengdu"],
+                    "Hubei": ["Wuhan"]
+                }
+            },
+            "Colombia": { code: "+57", states: { "Bogotá": ["Bogotá City"], "Antioquia": ["Medellín"], "Valle del Cauca": ["Cali"] } },
+            "Costa Rica": { code: "+506", states: { "San José": ["San José City"], "Alajuela": ["Alajuela City"] } },
+            "Croatia": { code: "+385", states: { "Zagreb": ["Zagreb City"], "Split-Dalmatia": ["Split"] } },
+            "Czech Republic": { code: "+420", states: { "Prague": ["Prague City"], "South Moravian": ["Brno"] } },
+            "Denmark": { code: "+45", states: { "Capital Region": ["Copenhagen"], "Central Jutland": ["Aarhus"] } },
+            "Egypt": { code: "+20", states: { "Cairo": ["Cairo City", "Giza"], "Alexandria": ["Alexandria City"] } },
+            "Estonia": { code: "+372", states: { "Harju": ["Tallinn"] } },
+            "Finland": { code: "+358", states: { "Uusimaa": ["Helsinki", "Espoo"], "Pirkanmaa": ["Tampere"] } },
+            "France": {
+                code: "+33", states: {
+                    "Île-de-France": ["Paris", "Versailles", "Boulogne-Billancourt"],
+                    "Provence-Alpes-Côte d'Azur": ["Marseille", "Nice", "Cannes"],
+                    "Auvergne-Rhône-Alpes": ["Lyon", "Grenoble"],
+                    "Occitanie": ["Toulouse", "Montpellier"],
+                    "Nouvelle-Aquitaine": ["Bordeaux"]
+                }
+            },
+            "Germany": {
+                code: "+49", states: {
+                    "Bavaria": ["Munich", "Nuremberg", "Augsburg"],
+                    "Berlin": ["Berlin City"],
+                    "Hamburg": ["Hamburg City"],
+                    "Hesse": ["Frankfurt", "Wiesbaden"],
+                    "North Rhine-Westphalia": ["Cologne", "Düsseldorf", "Dortmund", "Essen"],
+                    "Baden-Württemberg": ["Stuttgart", "Mannheim"]
+                }
+            },
+            "Greece": { code: "+30", states: { "Attica": ["Athens", "Piraeus"], "Central Macedonia": ["Thessaloniki"] } },
+            "Hong Kong": { code: "+852", states: { "Hong Kong Island": ["Central", "Wan Chai"], "Kowloon": ["Tsim Sha Tsui"] } },
+            "Hungary": { code: "+36", states: { "Budapest": ["Budapest City"], "Pest": ["Gödöllő"] } },
+            "Iceland": { code: "+354", states: { "Capital Region": ["Reykjavik"] } },
+            "India": {
+                code: "+91", states: {
+                    "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik", "Thane", "Aurangabad"],
+                    "Delhi": ["New Delhi", "North Delhi", "South Delhi", "East Delhi", "West Delhi"],
+                    "Karnataka": ["Bangalore", "Mysore", "Mangalore", "Hubli"],
+                    "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot"],
+                    "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli"],
+                    "West Bengal": ["Kolkata", "Howrah", "Durgapur"],
+                    "Telangana": ["Hyderabad", "Warangal"],
+                    "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur"],
+                    "Kerala": ["Kochi", "Thiruvananthapuram", "Kozhikode"],
+                    "Punjab": ["Chandigarh", "Ludhiana", "Amritsar"],
+                    "Haryana": ["Gurgaon", "Faridabad"],
+                    "Uttar Pradesh": ["Lucknow", "Kanpur", "Noida", "Agra"],
+                    "Madhya Pradesh": ["Indore", "Bhopal"]
+                }
+            },
+            "Indonesia": {
+                code: "+62", states: {
+                    "Jakarta": ["Jakarta City"],
+                    "West Java": ["Bandung", "Bekasi"],
+                    "East Java": ["Surabaya"],
+                    "Bali": ["Denpasar"]
+                }
+            },
+            "Iran": { code: "+98", states: { "Tehran": ["Tehran City"], "Isfahan": ["Isfahan City"] } },
+            "Iraq": { code: "+964", states: { "Baghdad": ["Baghdad City"], "Basra": ["Basra City"] } },
+            "Ireland": { code: "+353", states: { "Leinster": ["Dublin", "Cork"], "Munster": ["Limerick"] } },
+            "Israel": { code: "+972", states: { "Tel Aviv": ["Tel Aviv City"], "Jerusalem": ["Jerusalem City"], "Haifa": ["Haifa City"] } },
+            "Italy": {
+                code: "+39", states: {
+                    "Lazio": ["Rome"],
+                    "Lombardy": ["Milan", "Bergamo", "Brescia"],
+                    "Campania": ["Naples"],
+                    "Sicily": ["Palermo", "Catania"],
+                    "Veneto": ["Venice", "Verona"],
+                    "Piedmont": ["Turin"]
+                }
+            },
+            "Japan": {
+                code: "+81", states: {
+                    "Tokyo": ["Tokyo City", "Shibuya", "Shinjuku"],
+                    "Osaka": ["Osaka City"],
+                    "Kyoto": ["Kyoto City"],
+                    "Kanagawa": ["Yokohama"],
+                    "Aichi": ["Nagoya"],
+                    "Hokkaido": ["Sapporo"]
+                }
+            },
+            "Jordan": { code: "+962", states: { "Amman": ["Amman City"] } },
+            "Kazakhstan": { code: "+7", states: { "Almaty": ["Almaty City"], "Nur-Sultan": ["Nur-Sultan City"] } },
+            "Kenya": { code: "+254", states: { "Nairobi": ["Nairobi City"], "Mombasa": ["Mombasa City"] } },
+            "Kuwait": { code: "+965", states: { "Capital": ["Kuwait City"] } },
+            "Latvia": { code: "+371", states: { "Riga": ["Riga City"] } },
+            "Lebanon": { code: "+961", states: { "Beirut": ["Beirut City"] } },
+            "Lithuania": { code: "+370", states: { "Vilnius": ["Vilnius City"] } },
+            "Luxembourg": { code: "+352", states: { "Luxembourg": ["Luxembourg City"] } },
+            "Malaysia": {
+                code: "+60", states: {
+                    "Kuala Lumpur": ["Kuala Lumpur City"],
+                    "Selangor": ["Petaling Jaya", "Shah Alam"],
+                    "Penang": ["George Town"],
+                    "Johor": ["Johor Bahru"]
+                }
+            },
+            "Mexico": {
+                code: "+52", states: {
+                    "Mexico City": ["Mexico City"],
+                    "Jalisco": ["Guadalajara"],
+                    "Nuevo León": ["Monterrey"],
+                    "Puebla": ["Puebla City"],
+                    "Quintana Roo": ["Cancún"]
+                }
+            },
+            "Morocco": { code: "+212", states: { "Casablanca-Settat": ["Casablanca"], "Rabat-Salé-Kénitra": ["Rabat"] } },
+            "Netherlands": {
+                code: "+31", states: {
+                    "North Holland": ["Amsterdam", "Haarlem"],
+                    "South Holland": ["Rotterdam", "The Hague"],
+                    "Utrecht": ["Utrecht City"]
+                }
+            },
+            "New Zealand": {
+                code: "+64", states: {
+                    "Auckland": ["Auckland City"],
+                    "Wellington": ["Wellington City"],
+                    "Canterbury": ["Christchurch"],
+                    "Otago": ["Dunedin"]
+                }
+            },
+            "Nigeria": { code: "+234", states: { "Lagos": ["Lagos City"], "Abuja": ["Abuja City"], "Kano": ["Kano City"] } },
+            "Norway": { code: "+47", states: { "Oslo": ["Oslo City"], "Hordaland": ["Bergen"] } },
+            "Oman": { code: "+968", states: { "Muscat": ["Muscat City"] } },
+            "Pakistan": {
+                code: "+92", states: {
+                    "Sindh": ["Karachi"],
+                    "Punjab": ["Lahore", "Faisalabad", "Rawalpindi"],
+                    "Khyber Pakhtunkhwa": ["Peshawar"],
+                    "Islamabad": ["Islamabad City"]
+                }
+            },
+            "Peru": { code: "+51", states: { "Lima": ["Lima City"], "Cusco": ["Cusco City"] } },
+            "Philippines": {
+                code: "+63", states: {
+                    "Metro Manila": ["Manila", "Quezon City", "Makati"],
+                    "Cebu": ["Cebu City"],
+                    "Davao": ["Davao City"]
+                }
+            },
+            "Poland": {
+                code: "+48", states: {
+                    "Masovian": ["Warsaw"],
+                    "Lesser Poland": ["Kraków"],
+                    "Greater Poland": ["Poznań"],
+                    "Lower Silesian": ["Wrocław"]
+                }
+            },
+            "Portugal": { code: "+351", states: { "Lisbon": ["Lisbon City"], "Porto": ["Porto City"] } },
+            "Qatar": { code: "+974", states: { "Doha": ["Doha City"] } },
+            "Romania": { code: "+40", states: { "Bucharest": ["Bucharest City"], "Cluj": ["Cluj-Napoca"] } },
+            "Russia": {
+                code: "+7", states: {
+                    "Moscow": ["Moscow City"],
+                    "Saint Petersburg": ["Saint Petersburg City"],
+                    "Sverdlovsk": ["Yekaterinburg"],
+                    "Tatarstan": ["Kazan"]
+                }
+            },
+            "Saudi Arabia": {
+                code: "+966", states: {
+                    "Riyadh": ["Riyadh City"],
+                    "Makkah": ["Jeddah", "Mecca"],
+                    "Eastern": ["Dammam", "Khobar"]
+                }
+            },
+            "Serbia": { code: "+381", states: { "Belgrade": ["Belgrade City"], "Novi Sad": ["Novi Sad City"] } },
+            "Singapore": { code: "+65", states: { "Central": ["Singapore City", "Marina Bay", "Orchard"] } },
+            "Slovakia": { code: "+421", states: { "Bratislava": ["Bratislava City"] } },
+            "Slovenia": { code: "+386", states: { "Ljubljana": ["Ljubljana City"] } },
+            "South Africa": {
+                code: "+27", states: {
+                    "Gauteng": ["Johannesburg", "Pretoria"],
+                    "Western Cape": ["Cape Town"],
+                    "KwaZulu-Natal": ["Durban"]
+                }
+            },
+            "South Korea": {
+                code: "+82", states: {
+                    "Seoul": ["Seoul City"],
+                    "Busan": ["Busan City"],
+                    "Incheon": ["Incheon City"],
+                    "Gyeonggi": ["Suwon"]
+                }
+            },
+            "Spain": {
+                code: "+34", states: {
+                    "Madrid": ["Madrid City"],
+                    "Catalonia": ["Barcelona", "Tarragona"],
+                    "Andalusia": ["Seville", "Málaga"],
+                    "Valencia": ["Valencia City"],
+                    "Basque Country": ["Bilbao"]
+                }
+            },
+            "Sri Lanka": { code: "+94", states: { "Western": ["Colombo"] } },
+            "Sweden": {
+                code: "+46", states: {
+                    "Stockholm": ["Stockholm City"],
+                    "Västra Götaland": ["Gothenburg"],
+                    "Skåne": ["Malmö"]
+                }
+            },
+            "Switzerland": {
+                code: "+41", states: {
+                    "Zürich": ["Zürich City"],
+                    "Geneva": ["Geneva City"],
+                    "Bern": ["Bern City"],
+                    "Basel-Stadt": ["Basel"]
+                }
+            },
+            "Taiwan": { code: "+886", states: { "Taipei": ["Taipei City"], "Kaohsiung": ["Kaohsiung City"] } },
+            "Thailand": {
+                code: "+66", states: {
+                    "Bangkok": ["Bangkok City"],
+                    "Chiang Mai": ["Chiang Mai City"],
+                    "Phuket": ["Phuket City"]
+                }
+            },
+            "Turkey": {
+                code: "+90", states: {
+                    "Istanbul": ["Istanbul City"],
+                    "Ankara": ["Ankara City"],
+                    "Izmir": ["Izmir City"],
+                    "Antalya": ["Antalya City"]
+                }
+            },
+            "Ukraine": { code: "+380", states: { "Kyiv": ["Kyiv City"], "Kharkiv": ["Kharkiv City"], "Odessa": ["Odessa City"] } },
+            "United Arab Emirates": {
+                code: "+971", states: {
+                    "Dubai": ["Dubai City", "Dubai Marina"],
+                    "Abu Dhabi": ["Abu Dhabi City"],
+                    "Sharjah": ["Sharjah City"],
+                    "Ajman": ["Ajman City"]
+                }
+            },
+            "United Kingdom": {
+                code: "+44", states: {
+                    "England": ["London", "Manchester", "Birmingham", "Liverpool", "Leeds", "Bristol", "Newcastle"],
+                    "Scotland": ["Edinburgh", "Glasgow", "Aberdeen"],
+                    "Wales": ["Cardiff", "Swansea"],
+                    "Northern Ireland": ["Belfast"]
+                }
+            },
+            "United States": {
+                code: "+1", states: {
+                    "California": ["Los Angeles", "San Francisco", "San Diego", "San Jose", "Sacramento"],
+                    "New York": ["New York City", "Buffalo", "Rochester", "Albany"],
+                    "Texas": ["Houston", "Austin", "Dallas", "San Antonio", "Fort Worth"],
+                    "Florida": ["Miami", "Orlando", "Tampa", "Jacksonville"],
+                    "Illinois": ["Chicago", "Aurora", "Naperville"],
+                    "Pennsylvania": ["Philadelphia", "Pittsburgh"],
+                    "Ohio": ["Columbus", "Cleveland", "Cincinnati"],
+                    "Georgia": ["Atlanta", "Savannah"],
+                    "North Carolina": ["Charlotte", "Raleigh"],
+                    "Michigan": ["Detroit"],
+                    "Massachusetts": ["Boston", "Cambridge"],
+                    "Washington": ["Seattle", "Spokane"],
+                    "Arizona": ["Phoenix", "Tucson"],
+                    "Colorado": ["Denver", "Colorado Springs"],
+                    "Nevada": ["Las Vegas", "Reno"]
+                }
+            },
+            "Uruguay": { code: "+598", states: { "Montevideo": ["Montevideo City"] } },
+            "Venezuela": { code: "+58", states: { "Capital District": ["Caracas"], "Zulia": ["Maracaibo"] } },
+            "Vietnam": {
+                code: "+84", states: {
+                    "Hanoi": ["Hanoi City"],
+                    "Ho Chi Minh": ["Ho Chi Minh City"],
+                    "Da Nang": ["Da Nang City"]
+                }
+            },
+            "Other": { code: "", states: { "Manual Entry": ["Manual Entry"] } }
+        };
+
+        // Icon Components
+        const Wind = () => <i data-lucide="wind"></i>;
+        const ArrowRight = ({ className }) => <i data-lucide="arrow-right" className={className}></i>;
+        const Zap = ({ className }) => <i data-lucide="zap" className={className}></i>;
+        const Shield = ({ className }) => <i data-lucide="shield" className={className}></i>;
+        const Sparkles = ({ className }) => <i data-lucide="sparkles" className={className}></i>;
+        const Loader2 = ({ className }) => <i data-lucide="loader-2" className={className}></i>;
+        const CheckCircle2 = ({ className }) => <i data-lucide="check-circle-2" className={className}></i>;
+        const MousePointer2 = ({ className }) => <i data-lucide="mouse-pointer-2" className={className}></i>;
+        const RotateCcw = ({ className, style }) => <i data-lucide="rotate-ccw" className={className} style={style}></i>;
+
+        // FAQ Item Component
+        const FAQItem = ({ question, answer }) => {
+            const [isOpen, setIsOpen] = useState(false);
+
+            return (
+                <div
+                    className={`faq-item ${isOpen ? 'active' : ''}`}
+                    onClick={() => setIsOpen(!isOpen)}
+                >
+                    <div className="faq-question">
+                        <span>{question}</span>
+                        <span className="faq-icon">+</span>
+                    </div>
+                    <div className="faq-answer">
+                        <p>{answer}</p>
+                    </div>
+                </div>
+            );
+        };
+
+        // Chatbot Component with Gemini 1.5 Flash API - Bilingual (Hindi/English)
+        const Chatbot = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const [messages, setMessages] = useState([
+                { type: 'bot', text: "Hi! I'm your YU assistant. Ask me anything about our pure oxygen system in English or Hindi! 🌬️\n\nनमस्ते! मैं आपका YU सहायक हूं। YU ऑक्सीजन के बारे में कुछ भी पूछें!" }
+            ]);
+            const [input, setInput] = useState('');
+            const [loading, setLoading] = useState(false);
+            const [language, setLanguage] = useState('auto'); // auto, en, hi
+
+            const sendMessage = async () => {
+                if (!input.trim()) return;
+
+                const userMessage = input;
+                setMessages(prev => [...prev, { type: 'user', text: userMessage }]);
+                setInput('');
+                setLoading(true);
+
+                try {
+                    // Call Backend API
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: userMessage,
+                            history: messages.map(m => ({
+                                role: m.type === 'user' ? 'user' : 'model',
+                                parts: [{ text: m.text }]
+                            }))
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.response) {
+                        setMessages(prev => [...prev, { type: 'bot', text: data.response }]);
+                    } else if (data.error) {
+                        throw new Error(data.error);
+                    } else {
+                        throw new Error("Invalid response from server");
+                    }
+
+                } catch (error) {
+                    console.error('Chatbot error:', error);
+
+                    // Fallback responses based on common questions
+                    let fallbackResponse = "I'm having trouble connecting to my AI brain right now 😅 But I can still help! Try asking about:\n• How YU works\n• Benefits for athletes\n• Usage instructions\n• Safety information\n\nया हिंदी में पूछें!";
+
+                    const lowerInput = userMessage.toLowerCase();
+                    if (lowerInput.includes('price') || lowerInput.includes('cost') || lowerInput.includes('कीमत')) {
+                        fallbackResponse = "For current pricing and exclusive offers, please check the reservation form below. We offer special early-bird pricing! 💙\n\nमूल्य की जानकारी के लिए कृपया नीचे रिज़र्वेशन फॉर्म देखें!";
+                    } else if (lowerInput.includes('safe') || lowerInput.includes('सुरक्षित')) {
+                        fallbackResponse = "Yes! YU is safe for daily wellness use (5-15 min sessions). However, it's a wellness product, not medical treatment. Consult your doctor if you have respiratory conditions. ✅\n\nहां! YU दैनिक उपयोग के लिए सुरक्षित है। लेकिन यह चिकित्सा उपकरण नहीं है।";
+                    } else if (lowerInput.includes('how') || lowerInput.includes('use') || lowerInput.includes('कैसे')) {
+                        fallbackResponse = "Super simple! 1) Remove cap 2) Place mask over nose/mouth 3) Press trigger and breathe deeply 4) Take 5-10 breaths. Use before workouts, after exercise, or anytime you need a boost! 🌬️\n\nबहुत आसान! कैप हटाएं, मास्क लगाएं, ट्रिगर दबाएं और गहरी सांस लें!";
+                    }
+
+                    setMessages(prev => [...prev, { type: 'bot', text: fallbackResponse }]);
+                }
+
+                setLoading(false);
+            };
+
+            return (
+                <div className="chatbot-widget">
+                    <button
+                        className="chatbot-button"
+                        onClick={() => setIsOpen(!isOpen)}
+                        title="Ask YU Assistant"
+                    >
+                        <i data-lucide="message-circle" style={{ width: '24px', height: '24px', color: 'white' }}></i>
+                    </button>
+
+                    <div className={`chatbot-window ${isOpen ? 'active' : ''}`}>
+                        <div className="chatbot-header">
+                            <div>
+                                <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.25rem' }}>YU Assistant 🌬️</h4>
+                                <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)' }}>English & हिंदी</p>
+                            </div>
+                            <button
+                                onClick={() => setIsOpen(false)}
+                                style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '1.5rem' }}
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <div className="chatbot-messages">
+                            {messages.map((msg, idx) => (
+                                <div key={idx} className={`chat-message ${msg.type}`}>
+                                    {msg.text}
+                                </div>
+                            ))}
+                            {loading && (
+                                <div className="chat-message bot">
+                                    <Loader2 className="animate-spin-loader" style={{ width: '1rem', height: '1rem' }} />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="chatbot-input-area">
+                            <input
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                                placeholder="Ask in English or Hindi..."
+                                style={{
+                                    flex: 1,
+                                    padding: '0.75rem 1rem',
+                                    background: 'rgba(255,255,255,0.05)',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    borderRadius: '9999px',
+                                    color: 'white',
+                                    outline: 'none',
+                                    fontSize: '0.875rem'
+                                }}
+                            />
+                            <button
+                                onClick={sendMessage}
+                                disabled={loading}
+                                style={{
+                                    padding: '0.75rem 1.5rem',
+                                    background: loading ? 'rgba(37,99,235,0.5)' : '#2563eb',
+                                    border: 'none',
+                                    borderRadius: '9999px',
+                                    color: 'white',
+                                    cursor: loading ? 'not-allowed' : 'pointer',
+                                    fontWeight: 600
+                                }}
+                            >
+                                Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [scrollY, setScrollY] = useState(0);
+            const [user, setUser] = useState(null);
+            const [loading, setLoading] = useState(false);
+            const [isReserved, setIsReserved] = useState(false);
+
+            const [formData, setFormData] = useState({
+                name: '', email: '', phone: '', country: '', state: '', city: ''
+            });
+
+            const [errors, setErrors] = useState({});
+
+            useEffect(() => {
+                const handleScroll = () => setScrollY(window.scrollY);
+                window.addEventListener('scroll', handleScroll, { passive: true });
+
+                // Initialize Lucide icons
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+
+                const initAuth = async () => {
+                    if (auth) {
+                        try {
+                            await auth.signInAnonymously();
+                        } catch (e) {
+                            console.error("Auth Error", e);
+                        }
+                    } else {
+                        // Demo mode - create mock user
+                        setUser({ uid: 'demo-user' });
+                    }
+                };
+
+                initAuth();
+
+                let unsub = () => { };
+                if (auth) {
+                    unsub = auth.onAuthStateChanged(setUser);
+                }
+
+                return () => {
+                    window.removeEventListener('scroll', handleScroll);
+                    unsub();
+                };
+            }, []);
+
+            useEffect(() => {
+                // Re-initialize icons after state changes
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            });
+
+            const handleInputChange = (e) => {
+                const { name, value } = e.target;
+
+                // Clear error for this field when user starts typing
+                if (errors[name]) {
+                    setErrors(prev => {
+                        const newErrors = { ...prev };
+                        delete newErrors[name];
+                        return newErrors;
+                    });
+                }
+
+                if (name === 'country') {
+                    const code = COUNTRY_DATA[value]?.code || '';
+                    setFormData(prev => ({ ...prev, country: value, state: '', city: '', phone: code }));
+                } else if (name === 'state') {
+                    setFormData(prev => ({ ...prev, state: value, city: '' }));
+                } else {
+                    setFormData(prev => ({ ...prev, [name]: value }));
+                }
+            };
+
+            const validate = () => {
+                const e = {};
+                if (!formData.name.trim()) e.name = 'Name is required';
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Valid email is required';
+                if (formData.phone.length < 8) e.phone = 'Valid phone number is required';
+                if (!formData.country) e.country = 'Country is required';
+                setErrors(e);
+                return Object.keys(e).length === 0;
+            };
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                if (!validate()) return;
+                setLoading(true);
+
+                try {
+                    // Try Python backend first
+                    const response = await fetch('/api/prebook', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        setIsReserved(true);
+                    } else {
+                        // Handle validation errors from backend
+                        if (data.errors) {
+                            setErrors(data.errors);
+                        } else {
+                            alert('Submission failed. Please try again.');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Backend error:', error);
+                    // Fallback: Try Firebase if backend is not available
+                    try {
+                        if (db && user) {
+                            const ref = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('prebookings');
+                            await ref.add({
+                                ...formData,
+                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                                uid: user.uid
+                            });
+                            setIsReserved(true);
+                        } else {
+                            // Demo mode - just show success
+                            console.log('Demo submission:', formData);
+                            setIsReserved(true);
+                        }
+                    } catch (fbError) {
+                        console.error('Firebase error:', fbError);
+                        alert('Unable to connect to server. Please try again later.');
+                    }
+                } finally {
+                    setLoading(false);
+                }
+            };
+            const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+            const getOpacity = (start, end) => {
+                const progress = (scrollY - start) / (end - start);
+                if (progress < 0 || progress > 1) return 0;
+                return progress < 0.2 ? progress / 0.2 : progress > 0.8 ? (1 - progress) / 0.2 : 1;
+            };
+
+            return (
+                <div style={{ background: '#050505', color: 'white', fontFamily: 'Inter, sans-serif' }}>
+
+                    {/* PREMIUM TYPOGRAPHY OVERLAY */}
+                    <div style={{
+                        position: 'fixed',
+                        inset: 0,
+                        zIndex: 40,
+                        pointerEvents: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '0 1.5rem'
+                    }}>
+
+                        {/* Anchor Visual */}
+                        <div style={{
+                            position: 'absolute',
+                            inset: 0,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: -10,
+                            opacity: scrollY < windowHeight * 0.5 ? 1 : 0.2,
+                            transition: 'opacity 1s'
+                        }}>
+                            <div className="animate-pulse" style={{
+                                width: '40vw',
+                                height: '40vw',
+                                maxWidth: '400px',
+                                maxHeight: '400px',
+                                background: 'rgba(37, 99, 235, 0.1)',
+                                borderRadius: '50%',
+                                filter: 'blur(120px)'
+                            }} />
+                            <div className="animate-spin" style={{
+                                position: 'absolute',
+                                width: '20vw',
+                                height: '20vw',
+                                maxWidth: '200px',
+                                maxHeight: '200px',
+                                border: '1px solid rgba(59, 130, 246, 0.1)',
+                                borderRadius: '50%'
+                            }} />
+                        </div>
+
+                        {/* REEL 1: The Disruption */}
+                        <div style={{
+                            position: 'absolute',
+                            textAlign: 'center',
+                            transition: 'all 0.7s',
+                            opacity: getOpacity(0, windowHeight),
+                            transform: `translateY(${(1 - getOpacity(0, windowHeight)) * 30}px)`
+                        }}>
+                            <h1 style={{
+                                fontSize: 'clamp(3rem, 9vw, 8rem)',
+                                fontWeight: 900,
+                                letterSpacing: '-0.05em',
+                                textTransform: 'uppercase',
+                                lineHeight: 0.85,
+                                fontStyle: 'italic'
+                            }}>
+                                You upgraded <br /><span style={{ color: '#3b82f6' }}>your water.</span>
+                            </h1>
+                            <div style={{ marginTop: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', opacity: 0.6 }}>
+                                <div style={{ width: '1px', height: '3rem', background: 'linear-gradient(to bottom, #3b82f6, transparent)' }} />
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <MousePointer2 className="animate-bounce" style={{ width: '1rem', height: '1rem', color: '#60a5fa' }} />
+                                    <span style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.5em', fontWeight: 700, color: '#60a5fa' }}>Scroll to Evolve</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* REEL 2: The Question */}
+                        <div style={{
+                            position: 'absolute',
+                            textAlign: 'center',
+                            transition: 'opacity 0.3s, transform 0.3s',
+                            opacity: getOpacity(windowHeight, windowHeight * 2),
+                            transform: `translateY(${(1 - getOpacity(windowHeight, windowHeight * 2)) * 30}px)`
+                        }}>
+                            <h2 style={{
+                                fontSize: 'clamp(2rem, 7vw, 5rem)',
+                                fontWeight: 900,
+                                letterSpacing: '-0.05em',
+                                textTransform: 'uppercase',
+                                lineHeight: 0.9
+                            }}>
+                                Why are you still <br />breathing outdated air?
+                            </h2>
+                        </div>
+
+                        {/* REEL 3: The Reality */}
+                        <div style={{
+                            position: 'absolute',
+                            textAlign: 'center',
+                            transition: 'opacity 0.3s, transform 0.3s',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            opacity: getOpacity(windowHeight * 2, windowHeight * 3),
+                            transform: `translateY(${(1 - getOpacity(windowHeight * 2, windowHeight * 3)) * 30}px)`
+                        }}>
+                            <p style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)', fontWeight: 900, fontStyle: 'italic', color: 'rgba(255,255,255,0.2)' }}>Cities evolved.</p>
+                            <p style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)', fontWeight: 900, fontStyle: 'italic', color: 'rgba(255,255,255,0.5)' }}>Lifestyles upgraded.</p>
+                            <p style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)', fontWeight: 900, fontStyle: 'italic', textDecoration: 'underline', textDecorationColor: '#3b82f6', textUnderlineOffset: '8px' }}>Air didn't.</p>
+                        </div>
+
+                        {/* REEL 4: The Habit Reframe */}
+                        <div style={{
+                            position: 'absolute',
+                            textAlign: 'center',
+                            transition: 'opacity 0.3s, transform 0.3s',
+                            opacity: getOpacity(windowHeight * 3, windowHeight * 4),
+                            transform: `translateY(${(1 - getOpacity(windowHeight * 3, windowHeight * 4)) * 30}px)`
+                        }}>
+                            <h3 style={{
+                                fontSize: 'clamp(2rem, 6vw, 4rem)',
+                                fontWeight: 900,
+                                letterSpacing: '-0.05em',
+                                textTransform: 'uppercase',
+                                lineHeight: 1
+                            }}>
+                                The final <br />biological upgrade.
+                            </h3>
+                            <p className="animate-pulse" style={{ marginTop: '2rem', color: '#3b82f6', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.8em' }}>YU SYSTEM 01</p>
+                        </div>
+                    </div>
+
+                    {/* SCROLL SPACER - Creates space for narrative slides to appear one by one */}
+                    <div style={{ height: '500vh', width: '100%', background: 'transparent' }} />
+
+                    {/* THE REVEAL SECTION - ABOUT */}
+                    <section id="about" style={{
+                        minHeight: '100vh',
+                        width: '100%',
+                        background: 'black',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '10rem 1.5rem',
+                        position: 'relative',
+                        borderTop: '1px solid rgba(255,255,255,0.05)'
+                    }}>
+                        <div style={{ maxWidth: '80rem', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '6rem', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                    <span style={{ color: '#3b82f6', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', fontSize: '10px' }}>Hardware // Batch 001</span>
+                                    <h2 style={{ fontSize: 'clamp(5rem, 12vw, 12rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 1, fontStyle: 'italic' }}>
+                                        YU<span style={{ color: '#3b82f6' }}>.</span>
+                                    </h2>
+                                </div>
+                                <p style={{ fontSize: 'clamp(1.25rem, 2vw, 1.5rem)', color: 'rgba(255,255,255,0.4)', fontWeight: 300, lineHeight: 1.6, maxWidth: '28rem' }}>
+                                    99% Pure Oxygen. Compressed into 12 Liters of peak human potential.
+                                </p>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                                    <div>
+                                        <p style={{ fontSize: '2.25rem', fontWeight: 900, letterSpacing: '-0.05em' }}>12L</p>
+                                        <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Atmosphere</p>
+                                    </div>
+                                    <div>
+                                        <p style={{ fontSize: '2.25rem', fontWeight: 900, letterSpacing: '-0.05em' }}>99%</p>
+                                        <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Medical Grade</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{ position: 'relative' }}>
+                                {/* Actual Product Image */}
+                                <div style={{ position: 'relative', maxWidth: '500px', margin: '0 auto' }}>
+                                    <img
+                                        src="assets/product.png"
+                                        alt="YU O2 Portable Oxygen Can"
+                                        style={{
+                                            width: '100%',
+                                            height: 'auto',
+                                            filter: 'drop-shadow(0 25px 50px rgba(37,99,235,0.3))',
+                                            transition: 'transform 0.5s ease',
+                                            cursor: 'pointer'
+                                        }}
+                                        onMouseEnter={(e) => e.target.style.transform = 'scale(1.05) rotate(2deg)'}
+                                        onMouseLeave={(e) => e.target.style.transform = 'scale(1) rotate(0deg)'}
+                                    />
+                                    {/* Glow effect behind product */}
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        width: '80%',
+                                        height: '80%',
+                                        background: 'radial-gradient(circle, rgba(37,99,235,0.3) 0%, transparent 70%)',
+                                        filter: 'blur(60px)',
+                                        zIndex: -1,
+                                        animation: 'pulse 3s ease-in-out infinite'
+                                    }} />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* BENEFITS GRID */}
+                    <section id="benefits" style={{ background: '#080808', padding: '8rem 1.5rem' }}>
+                        <div style={{ maxWidth: '80rem', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+                            {[
+                                { Icon: Zap, t: "Peak Output", d: "Instantly clear lactic acid. Re-oxygenate blood in 3 seconds for the next set." },
+                                { Icon: Shield, t: "Urban Armor", d: "Filter-free purity for high-AQI cities. Don't inhale the pollution of 10 million others." },
+                                { Icon: Sparkles, t: "Cellular Glow", d: "Skin regeneration requires oxygen. Detoxify from the inside out for natural radiance." }
+                            ].map((item, i) => (
+                                <div key={i} style={{
+                                    padding: '3rem',
+                                    border: '1px solid rgba(255,255,255,0.05)',
+                                    borderRadius: '1.5rem',
+                                    background: 'rgba(9,9,11,0.5)',
+                                    transition: 'all 0.3s'
+                                }}>
+                                    <item.Icon className="w-10 h-10 text-blue-500 mb-8" style={{ width: '2.5rem', height: '2.5rem', color: '#3b82f6', marginBottom: '2rem' }} />
+                                    <h4 style={{ fontSize: '1.5rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.05em', marginBottom: '1rem', fontStyle: 'italic' }}>
+                                        {item.t}
+                                    </h4>
+                                    <p style={{ color: 'rgba(255,255,255,0.4)', lineHeight: 1.6, fontSize: '0.875rem' }}>{item.d}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+
+                    {/* THE PROTOCOL - HOW IT WORKS */}
+                    <section id="how-it-works" style={{ background: '#050505', padding: '10rem 1.5rem' }}>
+                        <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
+                            <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+                                <h2 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 0.9, fontStyle: 'italic', marginBottom: '2rem' }}>
+                                    The <span style={{ color: '#3b82f6' }}>Protocol</span>
+                                </h2>
+                                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.25rem' }}>Simplicity by design. Two steps to atmosphere.</p>
+                            </div>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', maxWidth: '50rem', margin: '0 auto' }}>
+                                {[
+                                    { step: "01", title: "Placement", desc: "Position the integrated mask-cap over your nose and mouth. The ergonomic seal aligns instantly.", Icon: Shield },
+                                    { step: "02", title: "Ignite", desc: "Press the trigger. Inhale deep. Feel the biological upgrade immediately.", Icon: Wind }
+                                ].map((item, i) => (
+                                    <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '2rem' }}>
+                                        <div style={{ position: 'relative' }}>
+                                            <div style={{ width: '5rem', height: '5rem', borderRadius: '50%', border: '1px solid rgba(59, 130, 246, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(59, 130, 246, 0.05)' }}>
+                                                <item.Icon style={{ width: '2rem', height: '2rem', color: '#3b82f6' }} />
+                                            </div>
+                                            <div style={{ position: 'absolute', top: -10, right: -10, fontSize: '0.875rem', fontWeight: 900, color: 'rgba(255,255,255,0.2)' }}>/ {item.step}</div>
+                                        </div>
+                                        <div>
+                                            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>{item.title}</h3>
+                                            <p style={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, maxWidth: '280px', margin: '0 auto' }}>{item.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* WHO NEEDS YU - EDUCATIONAL SECTIONS */}
+                    <section style={{ background: 'black', padding: '10rem 1.5rem', position: 'relative', overflow: 'hidden' }}>
+                        <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
+
+                            {/* Section Header */}
+                            <div style={{ textAlign: 'center', marginBottom: '8rem' }}>
+                                <h2 style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 0.9, fontStyle: 'italic', marginBottom: '2rem' }}>
+                                    Who Needs <span style={{ color: '#3b82f6' }}>YU?</span>
+                                </h2>
+                                <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: 'rgba(255,255,255,0.4)', maxWidth: '40rem', margin: '0 auto' }}>
+                                    Pure oxygen isn't just for emergencies. It's the biological upgrade your body has been waiting for.
+                                </p>
+                            </div>
+
+                            {/* 1. ATHLETES & FITNESS */}
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center', marginBottom: '10rem', padding: '4rem', background: 'linear-gradient(135deg, rgba(37,99,235,0.05) 0%, transparent 100%)', borderRadius: '2rem', border: '1px solid rgba(37,99,235,0.1)' }}>
+                                <div>
+                                    <div style={{ width: '80px', height: '80px', background: 'rgba(37,99,235,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem' }}>
+                                        <Zap style={{ width: '40px', height: '40px', color: '#3b82f6' }} />
+                                    </div>
+                                    <h3 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', marginBottom: '1.5rem', fontStyle: 'italic' }}>
+                                        For Athletes
+                                    </h3>
+                                    <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#3b82f6', fontWeight: 700, marginBottom: '2rem' }}>
+                                        Peak Performance • Faster Recovery
+                                    </p>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                    <div style={{ padding: '1.5rem', background: 'rgba(37,99,235,0.05)', borderRadius: '1rem', borderLeft: '3px solid #3b82f6' }}>
+                                        <h4 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>⚡ Clear Lactic Acid Instantly</h4>
+                                        <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem' }}>
+                                            99% pure oxygen accelerates lactic acid removal. Feel the burn disappear in seconds.
+                                        </p>
+                                    </div>
+                                    <div style={{ padding: '1.5rem', background: 'rgba(37,99,235,0.05)', borderRadius: '1rem', borderLeft: '3px solid #3b82f6' }}>
+                                        <h4 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>🔄 Recover 40% Faster</h4>
+                                        <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem' }}>
+                                            Speed up cellular repair and reduce inflammation. Train harder, recover faster.
+                                        </p>
+                                    </div>
+                                    <div style={{ padding: '1.5rem', background: 'rgba(37,99,235,0.05)', borderRadius: '1rem', borderLeft: '3px solid #3b82f6' }}>
+                                        <h4 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>🎯 Push Past Limits</h4>
+                                        <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem' }}>
+                                            Pre-workout oxygen boosts VO2 max and delays fatigue. Break your personal records.
+                                        </p>
+                                    </div>
+                                    <div style={{ padding: '1rem 1.5rem', background: 'rgba(37,99,235,0.1)', borderRadius: '0.75rem' }}>
+                                        <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic' }}>
+                                            <strong>Pro Tip:</strong> 3-5 breaths before sets, 5-10 during rest periods
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 2. URBAN DWELLERS */}
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center', marginBottom: '10rem', padding: '4rem', background: 'linear-gradient(135deg, rgba(239,68,68,0.05) 0%, transparent 100%)', borderRadius: '2rem', border: '1px solid rgba(239,68,68,0.1)' }}>
+                                <div style={{ order: 2 }}>
+                                    <div style={{ width: '80px', height: '80px', background: 'rgba(239,68,68,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem' }}>
+                                        <Shield style={{ width: '40px', height: '40px', color: '#ef4444' }} />
+                                    </div>
+                                    <h3 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', marginBottom: '1.5rem', fontStyle: 'italic' }}>
+                                        For Urban Living
+                                    </h3>
+                                    <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#ef4444', fontWeight: 700, marginBottom: '2rem' }}>
+                                        Clean Air • Pollution Defense
+                                    </p>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', order: 1 }}>
+                                    <div style={{ padding: '1.5rem', background: 'rgba(239,68,68,0.05)', borderRadius: '1rem', borderLeft: '3px solid #ef4444' }}>
+                                        <h4 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>🏙️ Combat Pollution</h4>
+                                        <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem' }}>
+                                            Your sanctuary from PM2.5, nitrogen dioxide, and smog. 99% pure oxygen, no filters needed.
+                                        </p>
+                                    </div>
+                                    <div style={{ padding: '1.5rem', background: 'rgba(239,68,68,0.05)', borderRadius: '1rem', borderLeft: '3px solid #ef4444' }}>
+                                        <h4 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>🧠 Restore Mental Clarity</h4>
+                                        <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem' }}>
+                                            Polluted air reduces brain oxygen by 30%. Pure O2 eliminates brain fog and headaches instantly.
+                                        </p>
+                                    </div>
+                                    <div style={{ padding: '1.5rem', background: 'rgba(239,68,68,0.05)', borderRadius: '1rem', borderLeft: '3px solid #ef4444' }}>
+                                        <h4 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>💨 Instant Relief</h4>
+                                        <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem' }}>
+                                            Stuck in traffic or smoggy apartment? 5-10 breaths clear your respiratory system.
+                                        </p>
+                                    </div>
+                                    <div style={{ padding: '1rem 1.5rem', background: 'rgba(239,68,68,0.1)', borderRadius: '0.75rem' }}>
+                                        <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic' }}>
+                                            <strong>Did You Know?</strong> 10 min of pure O2 reverses 2 hours of pollution exposure
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 3. SKINCARE & BEAUTY */}
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center', marginBottom: '10rem', padding: '4rem', background: 'linear-gradient(135deg, rgba(236,72,153,0.05) 0%, transparent 100%)', borderRadius: '2rem', border: '1px solid rgba(236,72,153,0.1)' }}>
+                                <div>
+                                    <div style={{ width: '80px', height: '80px', background: 'rgba(236,72,153,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem' }}>
+                                        <Sparkles style={{ width: '40px', height: '40px', color: '#ec4899' }} />
+                                    </div>
+                                    <h3 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', marginBottom: '1.5rem', fontStyle: 'italic' }}>
+                                        For Radiant Skin
+                                    </h3>
+                                    <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#ec4899', fontWeight: 700, marginBottom: '2rem' }}>
+                                        Cellular Glow • Anti-Aging
+                                    </p>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                    <div style={{ padding: '1.5rem', background: 'rgba(236,72,153,0.05)', borderRadius: '1rem', borderLeft: '3px solid #ec4899' }}>
+                                        <h4 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>✨ Oxygen Facial at Home</h4>
+                                        <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem' }}>
+                                            Boost collagen production and reduce fine lines. Spa-quality results from within.
+                                        </p>
+                                    </div>
+                                    <div style={{ padding: '1.5rem', background: 'rgba(236,72,153,0.05)', borderRadius: '1rem', borderLeft: '3px solid #ec4899' }}>
+                                        <h4 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>🌟 Natural Detox</h4>
+                                        <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem' }}>
+                                            Accelerate lymphatic detox and flush out impurities. Your complexion's reset button.
+                                        </p>
+                                    </div>
+                                    <div style={{ padding: '1.5rem', background: 'rgba(236,72,153,0.05)', borderRadius: '1rem', borderLeft: '3px solid #ec4899' }}>
+                                        <h4 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>💧 Plump & Hydrated</h4>
+                                        <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem' }}>
+                                            Better circulation = better moisture delivery. Visibly plumper skin in 2 weeks.
+                                        </p>
+                                    </div>
+                                    <div style={{ padding: '1rem 1.5rem', background: 'rgba(236,72,153,0.1)', borderRadius: '0.75rem' }}>
+                                        <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic' }}>
+                                            <strong>Beauty Routine:</strong> 5 min morning & night with your skincare
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 4. WELLNESS & STRESS RELIEF - Simplified */}
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginBottom: '6rem' }}>
+                                <div style={{ padding: '2.5rem', background: 'linear-gradient(135deg, rgba(34,197,94,0.05) 0%, transparent 100%)', borderRadius: '1.5rem', border: '1px solid rgba(34,197,94,0.1)' }}>
+                                    <div style={{ width: '60px', height: '60px', background: 'rgba(34,197,94,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                                        <i data-lucide="heart-pulse" style={{ width: '30px', height: '30px', color: '#22c55e' }}></i>
+                                    </div>
+                                    <h4 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: 'white' }}>Respiratory Support</h4>
+                                    <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem', marginBottom: '1rem' }}>
+                                        Supplemental oxygen during mild breathing episodes. Helps with altitude, allergies, and sleep quality.
+                                    </p>
+                                    <p style={{ fontSize: '0.75rem', color: 'rgba(34,197,94,0.8)', fontStyle: 'italic' }}>
+                                        *Not a medical device. Consult your doctor for conditions.
+                                    </p>
+                                </div>
+                                <div style={{ padding: '2.5rem', background: 'linear-gradient(135deg, rgba(168,85,247,0.05) 0%, transparent 100%)', borderRadius: '1.5rem', border: '1px solid rgba(168,85,247,0.1)' }}>
+                                    <div style={{ width: '60px', height: '60px', background: 'rgba(168,85,247,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                                        <i data-lucide="brain" style={{ width: '30px', height: '30px', color: '#a855f7' }}></i>
+                                    </div>
+                                    <h4 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: 'white' }}>Stress & Anxiety Relief</h4>
+                                    <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem', marginBottom: '1rem' }}>
+                                        Deep breathing with pure oxygen activates your calm response. Lower cortisol in minutes.
+                                    </p>
+                                    <p style={{ fontSize: '0.75rem', color: 'rgba(168,85,247,0.8)', fontStyle: 'italic' }}>
+                                        Meditation amplified. Energy without caffeine.
+                                    </p>
+                                </div>
+                                <div style={{ padding: '2.5rem', background: 'linear-gradient(135deg, rgba(251,146,60,0.05) 0%, transparent 100%)', borderRadius: '1.5rem', border: '1px solid rgba(251,146,60,0.1)' }}>
+                                    <div style={{ width: '60px', height: '60px', background: 'rgba(251,146,60,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                                        <i data-lucide="gift" style={{ width: '30px', height: '30px', color: '#fb923c' }}></i>
+                                    </div>
+                                    <h4 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: 'white' }}>Perfect Gift</h4>
+                                    <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.875rem', marginBottom: '1rem' }}>
+                                        Show you care with the gift of pure breath. For parents, partners, friends who deserve better air.
+                                    </p>
+                                    <p style={{ fontSize: '0.75rem', color: 'rgba(251,146,60,0.8)', fontStyle: 'italic' }}>
+                                        Premium packaging. Wellness that lasts.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Bottom CTA */}
+                            <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'linear-gradient(135deg, rgba(37,99,235,0.1) 0%, transparent 100%)', borderRadius: '2rem', border: '1px solid rgba(37,99,235,0.2)' }}>
+                                <h3 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 900, marginBottom: '1.5rem', fontStyle: 'italic', letterSpacing: '-0.05em' }}>
+                                    Your Body Deserves Better Air
+                                </h3>
+                                <p style={{ fontSize: '1.125rem', color: 'rgba(255,255,255,0.6)', maxWidth: '40rem', margin: '0 auto 2.5rem' }}>
+                                    You upgraded your water. You upgraded your food. Now it's time to upgrade the 20,000 breaths you take every day.
+                                </p>
+                                <a href="#prebook" style={{ display: 'inline-block', padding: '1.25rem 3rem', background: '#2563eb', color: 'white', textDecoration: 'none', borderRadius: '9999px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.875rem', transition: 'all 0.3s' }} onMouseOver={(e) => { e.target.style.background = 'white'; e.target.style.color = 'black'; }} onMouseOut={(e) => { e.target.style.background = '#2563eb'; e.target.style.color = 'white'; }}>
+                                    Reserve Your YU Now
+                                </a>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    {/* FAQ SECTION */}
+                    <section id="faq" style={{
+                        background: '#050505',
+                        padding: '10rem 1.5rem',
+                        position: 'relative'
+                    }}>
+                        <div style={{ maxWidth: '56rem', margin: '0 auto' }}>
+                            {/* Section Header */}
+                            <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+                                <h2 style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 0.9, fontStyle: 'italic', marginBottom: '1.5rem' }}>
+                                    Questions? <span style={{ color: '#3b82f6' }}>Answered.</span>
+                                </h2>
+                                <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.4)', maxWidth: '32rem', margin: '0 auto' }}>
+                                    Everything you need to know about YU and pure oxygen therapy.
+                                </p>
+                            </div>
+
+                            {/* FAQ Items */}
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <FAQItem
+                                    question="How is YU different from regular air?"
+                                    answer="Regular air contains only 21% oxygen, mixed with 78% nitrogen and other gases. YU delivers 99% pure medical-grade oxygen, giving your body 5x more oxygen per breath. This concentrated oxygen supports faster recovery, enhanced mental clarity, and improved cellular function."
+                                />
+                                <FAQItem
+                                    question="Is it safe to use daily?"
+                                    answer="Yes! YU is designed for daily wellness use. Short sessions (5-15 minutes) of supplemental oxygen are safe for healthy individuals. However, YU is a wellness product, not a medical device. If you have any medical conditions, especially respiratory or cardiovascular issues, consult your healthcare provider before use."
+                                />
+                                <FAQItem
+                                    question="How long does one canister last?"
+                                    answer="Each 12L canister provides approximately 150-200 breaths, depending on your usage. For most people, this translates to 15-20 sessions of 5-10 breaths each. We recommend using YU when you need it most: post-workout, during high-stress moments, in polluted environments, or for enhanced focus."
+                                />
+                                <FAQItem
+                                    question="Can I use YU for medical conditions?"
+                                    answer="YU is a wellness product, NOT a medical device or treatment. It is not intended to diagnose, treat, cure, or prevent any disease. If you have asthma, COPD, or any respiratory condition, YU should never replace your prescribed medical treatment. Always consult your doctor before using supplemental oxygen."
+                                />
+                                <FAQItem
+                                    question="What's the science behind oxygen therapy?"
+                                    answer="Oxygen is essential for cellular energy production (ATP synthesis). Supplemental oxygen may support faster muscle recovery by accelerating lactic acid clearance, enhance cognitive function by increasing cerebral blood flow, and support skin health through improved cellular regeneration. While research on recreational oxygen use is ongoing, many users report feeling more energized and focused."
+                                />
+                                <FAQItem
+                                    question="How do I use YU?"
+                                    answer="It's simple: 1) Remove the cap, 2) Place the mask over your nose and mouth, 3) Press the trigger and breathe deeply, 4) Take 5-10 deep breaths as needed. Use YU before workouts for enhanced performance, after exercise for faster recovery, during stressful moments for calm, or anytime you need a mental boost."
+                                />
+                                <FAQItem
+                                    question="Is this suitable for children or elderly?"
+                                    answer="YU is designed for healthy adults. For children under 18 or elderly individuals with health conditions, please consult a healthcare provider before use. Supplemental oxygen can be beneficial across age groups, but individual health status should always be considered."
+                                />
+                                <FAQItem
+                                    question="Will I become dependent on it?"
+                                    answer="No. YU provides supplemental oxygen, not replacement oxygen. Your body will continue to breathe regular air normally. Think of it like a vitamin supplement—it enhances your baseline, but doesn't replace your body's natural functions. You can use it as needed without developing dependence."
+                                />
+                                <FAQItem
+                                    question="Can I travel with YU?"
+                                    answer="Yes! YU canisters are portable and TSA-compliant for air travel (check current airline regulations). They're perfect for high-altitude destinations, long flights, or travel to polluted cities. Many users pack YU for mountain trips to prevent altitude sickness."
+                                />
+                                <FAQItem
+                                    question="What's your return policy?"
+                                    answer="We offer a 30-day satisfaction guarantee. If you're not completely satisfied with YU, contact our support team for a full refund. We're confident you'll feel the difference, but we want you to try it risk-free. Note: For hygiene reasons, opened canisters cannot be resold but are eligible for refund."
+                                />
+                            </div>
+
+                            {/* Still Have Questions CTA */}
+                            <div style={{ marginTop: '6rem', padding: '3rem', background: 'linear-gradient(135deg, rgba(37,99,235,0.1) 0%, transparent 100%)', borderRadius: '2rem', border: '1px solid rgba(37,99,235,0.2)', textAlign: 'center' }}>
+                                <h3 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '1rem' }}>Still have questions?</h3>
+                                <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '2rem' }}>Our AI assistant can help you learn more about YU and find the perfect usage plan for your lifestyle.</p>
+                                <button
+                                    onClick={() => document.querySelector('.chatbot-window').classList.add('active')}
+                                    style={{ padding: '1rem 2rem', background: '#2563eb', color: 'white', border: 'none', borderRadius: '9999px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.875rem', cursor: 'pointer', transition: 'all 0.3s' }}
+                                    onMouseOver={(e) => { e.target.style.background = '#1d4ed8'; e.target.style.transform = 'scale(1.05)'; }}
+                                    onMouseOut={(e) => { e.target.style.background = '#2563eb'; e.target.style.transform = 'scale(1)'; }}
+                                >
+                                    Ask Our AI Assistant
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* PRE-BOOK FORM */}
+                    <section id="prebook" style={{
+                        minHeight: '100vh',
+                        padding: '10rem 1.5rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'black',
+                        position: 'relative',
+                        overflow: 'hidden'
+                    }}>
+                        <div style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '100%',
+                            height: '100%',
+                            background: 'rgba(37,99,235,0.02)',
+                            filter: 'blur(200px)'
+                        }} />
+
+                        <div style={{ maxWidth: '80rem', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '5rem', position: 'relative', zIndex: 10 }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'center' }}>
+                                <h2 style={{ fontSize: 'clamp(4rem, 10vw, 8rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 1, fontStyle: 'italic' }}>
+                                    Secure YU.
+                                </h2>
+                                <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: 'clamp(10px, 1vw, 12px)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.6em' }}>
+                                    Batch 001 Reservation Database
+                                </p>
+                            </div>
+
+                            {!isReserved ? (
+                                <form onSubmit={handleSubmit} style={{
+                                    background: '#09090b',
+                                    padding: 'clamp(2rem, 5vw, 4rem)',
+                                    borderRadius: '4rem',
+                                    border: '1px solid rgba(255,255,255,0.05)',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '2.5rem',
+                                    boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
+                                }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                            <label style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginLeft: '0.5rem' }}>
+                                                Identity // Name
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                required
+                                                value={formData.name}
+                                                onChange={handleInputChange}
+                                                placeholder="Full Name"
+                                                style={{
+                                                    width: '100%',
+                                                    padding: '1.5rem 2rem',
+                                                    background: 'black',
+                                                    border: errors.name ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+                                                    borderRadius: '9999px',
+                                                    outline: 'none',
+                                                    color: 'white',
+                                                    fontSize: '1rem',
+                                                    transition: 'border-color 0.3s'
+                                                }}
+                                            />
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                            <label style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginLeft: '0.5rem' }}>
+                                                Contact // Email
+                                            </label>
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                required
+                                                value={formData.email}
+                                                onChange={handleInputChange}
+                                                placeholder="your@email.com"
+                                                style={{
+                                                    width: '100%',
+                                                    padding: '1.5rem 2rem',
+                                                    background: 'black',
+                                                    border: errors.email ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+                                                    borderRadius: '9999px',
+                                                    outline: 'none',
+                                                    color: 'white',
+                                                    fontSize: '1rem',
+                                                    transition: 'border-color 0.3s'
+                                                }}
+                                            />
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                            <label style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginLeft: '0.5rem' }}>
+                                                Dial Code // Phone
+                                            </label>
+                                            <input
+                                                type="tel"
+                                                name="phone"
+                                                required
+                                                value={formData.phone}
+                                                onChange={handleInputChange}
+                                                placeholder="+00 000 0000"
+                                                style={{
+                                                    width: '100%',
+                                                    padding: '1.5rem 2rem',
+                                                    background: 'black',
+                                                    border: errors.phone ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+                                                    borderRadius: '9999px',
+                                                    outline: 'none',
+                                                    color: 'white',
+                                                    fontSize: '1rem',
+                                                    transition: 'border-color 0.3s'
+                                                }}
+                                            />
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                            <label style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginLeft: '0.5rem' }}>
+                                                Region // Country
+                                            </label>
+                                            <select
+                                                name="country"
+                                                required
+                                                value={formData.country}
+                                                onChange={handleInputChange}
+                                                style={{
+                                                    width: '100%',
+                                                    padding: '1.5rem 2rem',
+                                                    background: 'black',
+                                                    border: '1px solid rgba(255,255,255,0.1)',
+                                                    borderRadius: '9999px',
+                                                    outline: 'none',
+                                                    color: 'white',
+                                                    fontSize: '1rem',
+                                                    appearance: 'none',
+                                                    cursor: 'pointer'
+                                                }}
+                                            >
+                                                <option value="">Select Region</option>
+                                                {Object.keys(COUNTRY_DATA).sort().map(c => <option key={c} value={c}>{c}</option>)}
+                                                <option value="Other">Other (Manual Entry)</option>
+                                            </select>
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                            <label style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginLeft: '0.5rem' }}>
+                                                Territory // State
+                                            </label>
+                                            {COUNTRY_DATA[formData.country] ? (
+                                                <select
+                                                    name="state"
+                                                    required
+                                                    value={formData.state}
+                                                    onChange={handleInputChange}
+                                                    style={{
+                                                        width: '100%',
+                                                        padding: '1.5rem 2rem',
+                                                        background: 'black',
+                                                        border: '1px solid rgba(255,255,255,0.1)',
+                                                        borderRadius: '9999px',
+                                                        outline: 'none',
+                                                        color: 'white',
+                                                        fontSize: '1rem',
+                                                        appearance: 'none',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                >
+                                                    <option value="">Select Territory</option>
+                                                    {Object.keys(COUNTRY_DATA[formData.country].states).map(s => <option key={s} value={s}>{s}</option>)}
+                                                </select>
+                                            ) : (
+                                                <input
+                                                    type="text"
+                                                    name="state"
+                                                    placeholder="State/Province"
+                                                    value={formData.state}
+                                                    onChange={handleInputChange}
+                                                    disabled={!formData.country}
+                                                    style={{
+                                                        width: '100%',
+                                                        padding: '1.5rem 2rem',
+                                                        background: 'black',
+                                                        border: '1px solid rgba(255,255,255,0.1)',
+                                                        borderRadius: '9999px',
+                                                        outline: 'none',
+                                                        color: 'white',
+                                                        fontSize: '1rem',
+                                                        opacity: formData.country ? 1 : 0.2
+                                                    }}
+                                                />
+                                            )}
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                            <label style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginLeft: '0.5rem' }}>
+                                                Hub // City
+                                            </label>
+                                            {formData.state && COUNTRY_DATA[formData.country]?.states[formData.state] ? (
+                                                <select
+                                                    name="city"
+                                                    required
+                                                    value={formData.city}
+                                                    onChange={handleInputChange}
+                                                    style={{
+                                                        width: '100%',
+                                                        padding: '1.5rem 2rem',
+                                                        background: 'black',
+                                                        border: '1px solid rgba(255,255,255,0.1)',
+                                                        borderRadius: '9999px',
+                                                        outline: 'none',
+                                                        color: 'white',
+                                                        fontSize: '1rem',
+                                                        appearance: 'none',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                >
+                                                    <option value="">Select Hub</option>
+                                                    {COUNTRY_DATA[formData.country].states[formData.state].map(c => <option key={c} value={c}>{c}</option>)}
+                                                </select>
+                                            ) : (
+                                                <input
+                                                    type="text"
+                                                    name="city"
+                                                    placeholder="City"
+                                                    value={formData.city}
+                                                    onChange={handleInputChange}
+                                                    disabled={!formData.state}
+                                                    style={{
+                                                        width: '100%',
+                                                        padding: '1.5rem 2rem',
+                                                        background: 'black',
+                                                        border: '1px solid rgba(255,255,255,0.1)',
+                                                        borderRadius: '9999px',
+                                                        outline: 'none',
+                                                        color: 'white',
+                                                        fontSize: '1rem',
+                                                        opacity: formData.state ? 1 : 0.2
+                                                    }}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div style={{ paddingTop: '2.5rem' }}>
+                                        <button
+                                            type="submit"
+                                            disabled={loading}
+                                            style={{
+                                                width: '100%',
+                                                padding: '2rem',
+                                                background: loading ? 'rgba(37,99,235,0.5)' : '#2563eb',
+                                                color: 'white',
+                                                fontWeight: 900,
+                                                textTransform: 'uppercase',
+                                                letterSpacing: '0.4em',
+                                                borderRadius: '9999px',
+                                                border: 'none',
+                                                cursor: loading ? 'not-allowed' : 'pointer',
+                                                transition: 'all 0.3s',
+                                                fontSize: '0.875rem'
+                                            }}
+                                        >
+                                            {loading ? (
+                                                <Loader2 className="animate-spin-loader" style={{ width: '1.5rem', height: '1.5rem', margin: '0 auto' }} />
+                                            ) : (
+                                                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+                                                    <span>Secure Access</span>
+                                                    <ArrowRight style={{ width: '1.5rem', height: '1.5rem' }} />
+                                                </span>
+                                            )}
+                                        </button>
+                                    </div>
+                                </form>
+                            ) : (
+                                <div style={{
+                                    padding: '5rem',
+                                    border: '1px solid rgba(37,99,235,0.2)',
+                                    background: 'rgba(37,99,235,0.05)',
+                                    borderRadius: '5rem',
+                                    textAlign: 'center',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '2.5rem',
+                                    animation: 'zoom-in 1s'
+                                }}>
+                                    <div style={{
+                                        width: '6rem',
+                                        height: '6rem',
+                                        background: '#2563eb',
+                                        borderRadius: '50%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        margin: '0 auto',
+                                        boxShadow: '0 0 60px rgba(37,99,235,0.5)'
+                                    }}>
+                                        <CheckCircle2 style={{ width: '3rem', height: '3rem', color: 'white' }} />
+                                    </div>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                        <h3 style={{ fontSize: '3rem', fontWeight: 900, fontStyle: 'italic', letterSpacing: '-0.05em', color: '#3b82f6', textTransform: 'uppercase', lineHeight: 1 }}>
+                                            Identity Verified.
+                                        </h3>
+                                        <p style={{ color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.4em', fontSize: '10px', fontWeight: 700 }}>
+                                            Priority Enrollment Complete
+                                        </p>
+                                    </div>
+                                    <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1.125rem', fontWeight: 300, maxWidth: '28rem', margin: '0 auto', lineHeight: 1.6 }}>
+                                        Welcome to the future of breathing, <span style={{ color: 'white', fontWeight: 700 }}>{formData.name}</span>.
+                                        Your allocation is reserved for the <span style={{ color: 'white', fontWeight: 700 }}>{formData.city}</span> drop.
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    </section>
+
+                    {/* FOOTER */}
+                    <footer style={{ background: 'black', padding: '5rem 2.5rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ maxWidth: '80rem', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3rem' }}>
+                            <img src="assets/logo.jpg" alt="YU O2 Logo" style={{ height: '60px', width: 'auto', opacity: 0.6 }} />
+
+                            {/* Legal Disclaimers */}
+                            <div style={{ maxWidth: '48rem', textAlign: 'center', padding: '2rem', background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: '1rem' }}>
+                                <h4 style={{ fontSize: '0.875rem', fontWeight: 700, color: '#ef4444', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>Important Medical Disclaimer</h4>
+                                <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.8, marginBottom: '0.75rem' }}>
+                                    YU is a wellness product and is NOT a medical device. It is not intended to diagnose, treat, cure, or prevent any disease or medical condition.
+                                    Supplemental oxygen should not replace prescribed medical treatments or therapies.
+                                </p>
+                                <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.8, marginBottom: '0.75rem' }}>
+                                    If you have any respiratory conditions (including but not limited to asthma, COPD, or emphysema), cardiovascular conditions, or are pregnant,
+                                    consult your healthcare provider before using supplemental oxygen.
+                                </p>
+                                <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>
+                                    Individual results may vary. Statements regarding benefits have not been evaluated by the FDA. Use as directed. Keep out of reach of children.
+                                </p>
+                            </div>
+
+
+
+                            <div style={{ fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.6em', textAlign: 'center', opacity: 0.4 }}>
+                                Batch 001 // Global Hardware <br /> Worldwide 2026<br />
+                                © 2026 YU. All rights reserved.
+                            </div>
+                        </div>
+                    </footer>
+
+                    {/* Chatbot Widget */}
+                    <Chatbot />
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+
+    <!-- CURSOR-ONLY OXYGEN PARTICLE SYSTEM -->
+    <script>
+        // Cursor trail effect (CURSOR ONLY)
+        let cursorTrails = [];
+        const maxTrails = 5;
+
+        function createCursorTrail(x, y) {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            trail.style.opacity = '1';
+            document.body.appendChild(trail);
+
+            cursorTrails.push(trail);
+
+            // Fade out and remove
+            setTimeout(() => {
+                trail.style.opacity = '0';
+                setTimeout(() => {
+                    if (trail.parentNode) {
+                        trail.parentNode.removeChild(trail);
+                    }
+                    cursorTrails = cursorTrails.filter(t => t !== trail);
+                }, 300);
+            }, 200);
+
+            // Limit trails
+            if (cursorTrails.length > maxTrails) {
+                const oldTrail = cursorTrails.shift();
+                if (oldTrail && oldTrail.parentNode) {
+                    oldTrail.parentNode.removeChild(oldTrail);
+                }
+            }
+        }
+
+        // Click burst effect (AT CURSOR ONLY)
+        function createClickBurst(x, y) {
+            const burstCount = 15;
+
+            // Create ripple effect at cursor
+            const ripple = document.createElement('div');
+            ripple.className = 'oxygen-ripple';
+            ripple.style.left = (x - 50) + 'px';
+            ripple.style.top = (y - 50) + 'px';
+            document.body.appendChild(ripple);
+            setTimeout(() => {
+                if (ripple.parentNode) ripple.parentNode.removeChild(ripple);
+            }, 1500);
+
+            // Create burst particles at cursor
+            for (let i = 0; i < burstCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'oxygen-burst';
+
+                const angle = (Math.PI * 2 * i) / burstCount;
+                const distance = 60 + Math.random() * 80;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.setProperty('--ty', ty + 'px');
+
+                document.body.appendChild(particle);
+
+                // Remove after animation
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 1500);
+            }
+        }
+
+        // Initialize CURSOR-ONLY particle system
+        window.addEventListener('DOMContentLoaded', () => {
+            // Cursor trail
+            let lastTrailTime = 0;
+            document.addEventListener('mousemove', (e) => {
+                const now = Date.now();
+                if (now - lastTrailTime > 60) {
+                    createCursorTrail(e.clientX, e.clientY);
+                    lastTrailTime = now;
+                }
+            });
+
+            // Click burst at cursor
+            document.addEventListener('click', (e) => {
+                createClickBurst(e.clientX, e.clientY);
+            });
+        });
+    </script>
+</body>
+
+</html>
