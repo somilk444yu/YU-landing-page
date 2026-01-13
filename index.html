@@ -689,14 +689,15 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // Firebase Configuration - Replace with your actual config
+        // Firebase Configuration - YU Cares Production
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyBECl9G8fCfulrkafobOQmOElP3YJ8j4MQ",
+            authDomain: "yucaress.firebaseapp.com",
+            projectId: "yucaress",
+            storageBucket: "yucaress.firebasestorage.app",
+            messagingSenderId: "546642505369",
+            appId: "1:546642505369:web:c190c70d621c644d319208",
+            measurementId: "G-LQ7WBZWYX6"
         };
 
         // Initialize Firebase
@@ -1162,52 +1163,33 @@
                 setLoading(true);
 
                 try {
-                    // Try Python backend first
-                    const response = await fetch('http://localhost:5001/api/prebook', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData)
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok && data.success) {
+                    // Save directly to Firebase Firestore
+                    if (db) {
+                        await db.collection('prebookings').add({
+                            name: formData.name,
+                            email: formData.email,
+                            phone: formData.phone,
+                            country: formData.country,
+                            state: formData.state,
+                            city: formData.city,
+                            interest: formData.interest || 'Not specified',
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                            source: 'website'
+                        });
                         setIsReserved(true);
                     } else {
-                        // Handle validation errors from backend
-                        if (data.errors) {
-                            setErrors(data.errors);
-                        } else {
-                            alert('Submission failed. Please try again.');
-                        }
+                        // Firebase not available - this shouldn't happen with proper config
+                        console.error('Firebase not initialized');
+                        alert('Unable to save your reservation. Please try again.');
                     }
                 } catch (error) {
-                    console.error('Backend error:', error);
-                    // Fallback: Try Firebase if backend is not available
-                    try {
-                        if (db && user) {
-                            const ref = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('prebookings');
-                            await ref.add({
-                                ...formData,
-                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                uid: user.uid
-                            });
-                            setIsReserved(true);
-                        } else {
-                            // Demo mode - just show success
-                            console.log('Demo submission:', formData);
-                            setIsReserved(true);
-                        }
-                    } catch (fbError) {
-                        console.error('Firebase error:', fbError);
-                        alert('Unable to connect to server. Please try again later.');
-                    }
+                    console.error('Firebase error:', error);
+                    alert('Unable to save reservation. Please check your connection and try again.');
                 } finally {
                     setLoading(false);
                 }
             };
+
             const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
             const getOpacity = (start, end) => {
                 const progress = (scrollY - start) / (end - start);
