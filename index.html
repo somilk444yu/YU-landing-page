@@ -1191,10 +1191,22 @@
             };
 
             const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+
+            // Standard opacity for scroll-based reveals
             const getOpacity = (start, end) => {
                 const progress = (scrollY - start) / (end - start);
                 if (progress < 0 || progress > 1) return 0;
                 return progress < 0.2 ? progress / 0.2 : progress > 0.8 ? (1 - progress) / 0.2 : 1;
+            };
+
+            // Special opacity for first reel - visible immediately, fades on scroll
+            const getFirstReelOpacity = () => {
+                if (scrollY === 0) return 1; // Fully visible at page load
+                const fadeStart = 0;
+                const fadeEnd = windowHeight * 0.7;
+                const progress = scrollY / fadeEnd;
+                if (progress >= 1) return 0;
+                return 1 - progress;
             };
 
             return (
@@ -1243,13 +1255,13 @@
                             }} />
                         </div>
 
-                        {/* REEL 1: The Disruption */}
+                        {/* REEL 1: The Disruption - Visible on page load */}
                         <div style={{
                             position: 'absolute',
                             textAlign: 'center',
-                            transition: 'all 0.7s',
-                            opacity: getOpacity(0, windowHeight),
-                            transform: `translateY(${(1 - getOpacity(0, windowHeight)) * 30}px)`
+                            transition: 'all 0.5s',
+                            opacity: getFirstReelOpacity(),
+                            transform: `translateY(${(1 - getFirstReelOpacity()) * 30}px)`
                         }}>
                             <h1 style={{
                                 fontSize: 'clamp(3rem, 9vw, 8rem)',
