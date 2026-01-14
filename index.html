@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YU — The Final Biological Upgrade</title>
+    <title>YU - Oxygen Means YU</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
@@ -1365,10 +1365,29 @@
                             </h3>
                             <p className="animate-pulse" style={{ marginTop: '2rem', color: '#3b82f6', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.8em' }}>YU SYSTEM 01</p>
                         </div>
+                        {/* REEL 5: The Tagline - Oxygen means YU */}
+                        <div style={{
+                            position: 'absolute',
+                            textAlign: 'center',
+                            transition: 'opacity 0.3s, transform 0.3s',
+                            opacity: getOpacity(windowHeight * 4, windowHeight * 5),
+                            transform: `translateY(${(1 - getOpacity(windowHeight * 4, windowHeight * 5)) * 30}px)`
+                        }}>
+                            <h3 style={{
+                                fontSize: 'clamp(2rem, 6vw, 4rem)',
+                                fontWeight: 900,
+                                letterSpacing: '-0.05em',
+                                textTransform: 'uppercase',
+                                lineHeight: 1,
+                                fontStyle: 'italic'
+                            }}>
+                                Oxygen means <br /><span style={{ color: '#3b82f6' }}>YU</span>.
+                            </h3>
+                        </div>
                     </div>
 
                     {/* SCROLL SPACER - Creates space for narrative slides to appear one by one */}
-                    <div style={{ height: '500vh', width: '100%', background: 'transparent' }} />
+                    <div style={{ height: '600vh', width: '100%', background: 'transparent' }} />
 
                     {/* THE REVEAL SECTION - ABOUT */}
                     <section id="about" style={{
