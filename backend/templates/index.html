@@ -7,14 +7,49 @@
     <title>YU - Oxygen Means YU</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='assets/logo.jpg') }}">
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='assets/logo.jpg') }}">
+    <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+    <link rel="apple-touch-icon" href="assets/logo.jpg">
 
     <!-- SEO Meta Tags -->
     <meta name="description"
-        content="YU System 01: 99% Pure Medical-Grade Oxygen. The final biological upgrade for peak performance, urban protection, and cellular regeneration. A wellness product for those who demand more from life.">
+        content="YU System 01: 99% Pure Medical-Grade Oxygen. The final upgrade for peak performance, urban protection, and cellular regeneration. A wellness product for those who demand more from life.">
     <meta name="keywords"
         content="portable oxygen, medical grade oxygen, YU oxygen, breathing system, wellness technology, oxygen therapy, wellness gift, pure oxygen">
+
+    <!-- Schema.org Structured Data for AI Discoverability -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "YU System 01",
+        "description": "Premium portable oxygen device delivering 99% pure medical-grade oxygen for wellness, performance enhancement, and urban protection. A lifestyle wellness product for those who demand more from life.",
+        "brand": {
+            "@type": "Brand",
+            "name": "YU",
+            "slogan": "Oxygen Means YU"
+        },
+        "category": "Wellness/Breathing Devices",
+        "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/PreOrder",
+            "priceCurrency": "INR"
+        },
+        "audience": {
+            "@type": "PeopleAudience",
+            "audienceType": "Wellness enthusiasts, urban professionals, fitness enthusiasts, travelers"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "YU",
+        "description": "YU creates premium portable oxygen wellness devices for modern urban life.",
+        "brand": "YU",
+        "slogan": "Oxygen Means YU"
+    }
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -373,6 +408,250 @@
             }
         }
 
+        /* ===========================================
+           COMPREHENSIVE MOBILE & TABLET OPTIMIZATIONS
+           =========================================== */
+
+        /* TABLET BREAKPOINT */
+        @media (max-width: 1024px) {
+
+            /* Stack grids on tablet */
+            [style*="gridTemplateColumns"] {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* MOBILE BREAKPOINT */
+        @media (max-width: 768px) {
+
+            /* Center ALL content on mobile */
+            section>div {
+                text-align: center !important;
+            }
+
+            /* Stack all grids vertically */
+            [style*="display: grid"],
+            [style*="display:grid"] {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+
+            /* Center text containers */
+            [style*="maxWidth"] {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                text-align: center !important;
+            }
+
+            /* Fix the "Who Needs YU" section cards */
+            [style*="borderLeft: 3px"] {
+                border-left: none !important;
+                border-top: 3px solid inherit !important;
+                text-align: center !important;
+            }
+
+            /* Center feature icons */
+            [style*="borderRadius: '50%'"],
+            [style*="borderRadius: 50%"] {
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* Reduce decorative element visibility on mobile */
+            [style*="filter: blur"] {
+                opacity: 0.3 !important;
+            }
+
+            /* Better section padding */
+            section {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
+
+            /* Center headings */
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                text-align: center !important;
+                width: 100% !important;
+            }
+
+            /* Center paragraphs */
+            p {
+                text-align: center !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* Full width cards */
+            [style*="padding: '2.5rem'"],
+            [style*="padding: '3rem'"],
+            [style*="padding: '4rem'"] {
+                width: 100% !important;
+            }
+
+            /* Fix product image section */
+            [style*="order: 2"],
+            [style*="order: 1"] {
+                order: unset !important;
+            }
+
+            /* Form improvements */
+            form {
+                padding: 1.5rem !important;
+                border-radius: 2rem !important;
+                width: 100% !important;
+            }
+
+            input,
+            select {
+                padding: 1.25rem 1.5rem !important;
+                font-size: 16px !important;
+                /* Prevents iOS zoom */
+                width: 100% !important;
+            }
+
+            button[type="submit"] {
+                padding: 1.5rem !important;
+            }
+
+            /* FAQ items full width and centered */
+            .faq-item {
+                width: 100% !important;
+                text-align: left !important;
+            }
+
+            .faq-question {
+                font-size: 1rem !important;
+            }
+
+            .faq-answer {
+                font-size: 0.875rem !important;
+                text-align: left !important;
+            }
+
+            /* Product image centered */
+            img {
+                display: block !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* Reduce vertical spacing on mobile */
+            section {
+                padding-top: 4rem !important;
+                padding-bottom: 4rem !important;
+            }
+
+            /* Stats grid stays horizontal */
+            [style*="gridTemplateColumns: 'repeat(2, 1fr)'"] {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+
+        /* SMALL PHONES */
+        @media (max-width: 480px) {
+
+            /* Even smaller headlines */
+            h1,
+            h2,
+            h3 {
+                word-wrap: break-word;
+                hyphens: auto;
+            }
+
+            /* Better touch targets */
+            button,
+            a,
+            select,
+            input {
+                min-height: 44px;
+            }
+
+            /* Tighter padding */
+            section {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            /* Smaller FAQ text */
+            .faq-question {
+                font-size: 0.95rem !important;
+                padding-right: 0.5rem;
+            }
+
+            .faq-answer {
+                font-size: 0.8rem;
+            }
+
+            /* Hide heavy decorative elements on very small screens */
+            [style*="filter: blur(120px)"],
+            [style*="filter: blur(200px)"] {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 375px) {
+
+            /* Extra small phones */
+            .faq-question {
+                font-size: 0.85rem !important;
+            }
+
+            h2 {
+                font-size: 1.75rem !important;
+            }
+        }
+
+        /* Scroll indicator animation */
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0) translateX(-50%);
+            }
+
+            40% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+
+            60% {
+                transform: translateY(-5px) translateX(-50%);
+            }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            animation: bounce 2s infinite;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .scroll-indicator.hidden {
+            opacity: 0;
+        }
+
+        /* Better spacing between sections on mobile */
+        @media (max-width: 768px) {
+            .section-spacer {
+                height: 3rem;
+            }
+        }
+
         /* FAQ ACCORDION STYLES */
         .faq-item {
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -417,98 +696,6 @@
         .faq-item.active .faq-icon {
             transform: rotate(45deg);
         }
-
-        /* CHATBOT STYLES */
-        .chatbot-widget {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1000;
-        }
-
-        .chatbot-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .chatbot-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.6);
-        }
-
-        .chatbot-window {
-            position: absolute;
-            bottom: 80px;
-            right: 0;
-            width: 380px;
-            max-width: calc(100vw - 4rem);
-            height: 500px;
-            background: #09090b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1.5rem;
-            display: none;
-            flex-direction: column;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-        }
-
-        .chatbot-window.active {
-            display: flex;
-        }
-
-        .chatbot-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chatbot-messages {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .chatbot-input-area {
-            padding: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .chat-message {
-            padding: 1rem 1.25rem;
-            border-radius: 1rem;
-            max-width: 80%;
-            line-height: 1.6;
-            font-size: 0.875rem;
-        }
-
-        .chat-message.user {
-            background: #2563eb;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 0.25rem;
-        }
-
-        .chat-message.bot {
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.9);
-            align-self: flex-start;
-            border-bottom-left-radius: 0.25rem;
-        }
     </style>
 </head>
 
@@ -541,14 +728,15 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // Firebase Configuration - Replace with your actual config
+        // Firebase Configuration - YU Cares Production
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyBECl9G8fCfulrkafobOQmOElP3YJ8j4MQ",
+            authDomain: "yucaress.firebaseapp.com",
+            projectId: "yucaress",
+            storageBucket: "yucaress.firebasestorage.app",
+            messagingSenderId: "546642505369",
+            appId: "1:546642505369:web:c190c70d621c644d319208",
+            measurementId: "G-LQ7WBZWYX6"
         };
 
         // Initialize Firebase
@@ -922,7 +1110,6 @@
         const Loader2 = ({ className }) => <i data-lucide="loader-2" className={className}></i>;
         const CheckCircle2 = ({ className }) => <i data-lucide="check-circle-2" className={className}></i>;
         const MousePointer2 = ({ className }) => <i data-lucide="mouse-pointer-2" className={className}></i>;
-        const RotateCcw = ({ className, style }) => <i data-lucide="rotate-ccw" className={className} style={style}></i>;
         const Mountain = ({ style }) => <i data-lucide="mountain" style={style}></i>;
 
         // FAQ Item Component
@@ -945,146 +1132,7 @@
             );
         };
 
-        // Chatbot Component with Gemini 1.5 Flash API - Bilingual (Hindi/English)
-        const Chatbot = () => {
-            const [isOpen, setIsOpen] = useState(false);
-            const [messages, setMessages] = useState([
-                { type: 'bot', text: "Hi! I'm your YU assistant. Ask me anything about our pure oxygen system in English or Hindi! 🌬️\n\nनमस्ते! मैं आपका YU सहायक हूं। YU ऑक्सीजन के बारे में कुछ भी पूछें!" }
-            ]);
-            const [input, setInput] = useState('');
-            const [loading, setLoading] = useState(false);
-            const [language, setLanguage] = useState('auto'); // auto, en, hi
 
-            const sendMessage = async () => {
-                if (!input.trim()) return;
-
-                const userMessage = input;
-                setMessages(prev => [...prev, { type: 'user', text: userMessage }]);
-                setInput('');
-                setLoading(true);
-
-                try {
-                    // Call Backend API
-                    const response = await fetch('/api/chat', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            message: userMessage,
-                            history: messages.map(m => ({
-                                role: m.type === 'user' ? 'user' : 'model',
-                                parts: [{ text: m.text }]
-                            }))
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (data.response) {
-                        setMessages(prev => [...prev, { type: 'bot', text: data.response }]);
-                    } else if (data.error) {
-                        throw new Error(data.error);
-                    } else {
-                        throw new Error("Invalid response from server");
-                    }
-
-                } catch (error) {
-                    console.error('Chatbot error:', error);
-
-                    // Fallback responses based on common questions
-                    let fallbackResponse = "I'm having trouble connecting to my AI brain right now 😅 But I can still help! Try asking about:\n• How YU works\n• Benefits for athletes\n• Usage instructions\n• Safety information\n\nया हिंदी में पूछें!";
-
-                    const lowerInput = userMessage.toLowerCase();
-                    if (lowerInput.includes('price') || lowerInput.includes('cost') || lowerInput.includes('कीमत')) {
-                        fallbackResponse = "For current pricing and exclusive offers, please check the reservation form below. We offer special early-bird pricing! 💙\n\nमूल्य की जानकारी के लिए कृपया नीचे रिज़र्वेशन फॉर्म देखें!";
-                    } else if (lowerInput.includes('safe') || lowerInput.includes('सुरक्षित')) {
-                        fallbackResponse = "Yes! YU is safe for daily wellness use (5-15 min sessions). However, it's a wellness product, not medical treatment. Consult your doctor if you have respiratory conditions. ✅\n\nहां! YU दैनिक उपयोग के लिए सुरक्षित है। लेकिन यह चिकित्सा उपकरण नहीं है।";
-                    } else if (lowerInput.includes('how') || lowerInput.includes('use') || lowerInput.includes('कैसे')) {
-                        fallbackResponse = "Super simple! 1) Remove cap 2) Place mask over nose/mouth 3) Press trigger and breathe deeply 4) Take 5-10 breaths. Use before workouts, after exercise, or anytime you need a boost! 🌬️\n\nबहुत आसान! कैप हटाएं, मास्क लगाएं, ट्रिगर दबाएं और गहरी सांस लें!";
-                    }
-
-                    setMessages(prev => [...prev, { type: 'bot', text: fallbackResponse }]);
-                }
-
-                setLoading(false);
-            };
-
-            return (
-                <div className="chatbot-widget">
-                    <button
-                        className="chatbot-button"
-                        onClick={() => setIsOpen(!isOpen)}
-                        title="Ask YU Assistant"
-                    >
-                        <i data-lucide="message-circle" style={{ width: '24px', height: '24px', color: 'white' }}></i>
-                    </button>
-
-                    <div className={`chatbot-window ${isOpen ? 'active' : ''}`}>
-                        <div className="chatbot-header">
-                            <div>
-                                <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.25rem' }}>YU Assistant 🌬️</h4>
-                                <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)' }}>English & हिंदी</p>
-                            </div>
-                            <button
-                                onClick={() => setIsOpen(false)}
-                                style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '1.5rem' }}
-                            >
-                                ×
-                            </button>
-                        </div>
-
-                        <div className="chatbot-messages">
-                            {messages.map((msg, idx) => (
-                                <div key={idx} className={`chat-message ${msg.type}`}>
-                                    {msg.text}
-                                </div>
-                            ))}
-                            {loading && (
-                                <div className="chat-message bot">
-                                    <Loader2 className="animate-spin-loader" style={{ width: '1rem', height: '1rem' }} />
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="chatbot-input-area">
-                            <input
-                                type="text"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                                placeholder="Ask in English or Hindi..."
-                                style={{
-                                    flex: 1,
-                                    padding: '0.75rem 1rem',
-                                    background: 'rgba(255,255,255,0.05)',
-                                    border: '1px solid rgba(255,255,255,0.1)',
-                                    borderRadius: '9999px',
-                                    color: 'white',
-                                    outline: 'none',
-                                    fontSize: '0.875rem'
-                                }}
-                            />
-                            <button
-                                onClick={sendMessage}
-                                disabled={loading}
-                                style={{
-                                    padding: '0.75rem 1.5rem',
-                                    background: loading ? 'rgba(37,99,235,0.5)' : '#2563eb',
-                                    border: 'none',
-                                    borderRadius: '9999px',
-                                    color: 'white',
-                                    cursor: loading ? 'not-allowed' : 'pointer',
-                                    fontWeight: 600
-                                }}
-                            >
-                                Send
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
 
         const App = () => {
             const [scrollY, setScrollY] = useState(0);
@@ -1178,57 +1226,50 @@
                 setLoading(true);
 
                 try {
-                    // Try Python backend first
-                    const response = await fetch('/api/prebook', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData)
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok && data.success) {
+                    // Save directly to Firebase Firestore
+                    if (db) {
+                        await db.collection('prebookings').add({
+                            name: formData.name,
+                            email: formData.email,
+                            phone: formData.phone,
+                            country: formData.country,
+                            state: formData.state,
+                            city: formData.city,
+                            interest: formData.interest || 'Not specified',
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                            source: 'website'
+                        });
                         setIsReserved(true);
                     } else {
-                        // Handle validation errors from backend
-                        if (data.errors) {
-                            setErrors(data.errors);
-                        } else {
-                            alert('Submission failed. Please try again.');
-                        }
+                        // Firebase not available - this shouldn't happen with proper config
+                        console.error('Firebase not initialized');
+                        alert('Unable to save your reservation. Please try again.');
                     }
                 } catch (error) {
-                    console.error('Backend error:', error);
-                    // Fallback: Try Firebase if backend is not available
-                    try {
-                        if (db && user) {
-                            const ref = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('prebookings');
-                            await ref.add({
-                                ...formData,
-                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                uid: user.uid
-                            });
-                            setIsReserved(true);
-                        } else {
-                            // Demo mode - just show success
-                            console.log('Demo submission:', formData);
-                            setIsReserved(true);
-                        }
-                    } catch (fbError) {
-                        console.error('Firebase error:', fbError);
-                        alert('Unable to connect to server. Please try again later.');
-                    }
+                    console.error('Firebase error:', error);
+                    alert('Unable to save reservation. Please check your connection and try again.');
                 } finally {
                     setLoading(false);
                 }
             };
+
             const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+
+            // Standard opacity for scroll-based reveals
             const getOpacity = (start, end) => {
                 const progress = (scrollY - start) / (end - start);
                 if (progress < 0 || progress > 1) return 0;
                 return progress < 0.2 ? progress / 0.2 : progress > 0.8 ? (1 - progress) / 0.2 : 1;
+            };
+
+            // Special opacity for first reel - visible immediately, fades on scroll
+            const getFirstReelOpacity = () => {
+                if (scrollY === 0) return 1; // Fully visible at page load
+                const fadeStart = 0;
+                const fadeEnd = windowHeight * 0.4;
+                const progress = scrollY / fadeEnd;
+                if (progress >= 1) return 0;
+                return 1 - progress;
             };
 
             return (
@@ -1277,13 +1318,13 @@
                             }} />
                         </div>
 
-                        {/* REEL 1: The Disruption */}
+                        {/* REEL 1: The Disruption - Visible on page load */}
                         <div style={{
                             position: 'absolute',
                             textAlign: 'center',
-                            transition: 'all 0.7s',
-                            opacity: getOpacity(0, windowHeight),
-                            transform: `translateY(${(1 - getOpacity(0, windowHeight)) * 30}px)`
+                            transition: 'all 0.5s',
+                            opacity: getFirstReelOpacity(),
+                            transform: `translateY(${(1 - getFirstReelOpacity()) * 30}px)`
                         }}>
                             <h1 style={{
                                 fontSize: 'clamp(3rem, 9vw, 8rem)',
@@ -1309,8 +1350,8 @@
                             position: 'absolute',
                             textAlign: 'center',
                             transition: 'opacity 0.3s, transform 0.3s',
-                            opacity: getOpacity(windowHeight, windowHeight * 2),
-                            transform: `translateY(${(1 - getOpacity(windowHeight, windowHeight * 2)) * 30}px)`
+                            opacity: getOpacity(windowHeight * 0.4, windowHeight * 0.9),
+                            transform: `translateY(${(1 - getOpacity(windowHeight * 0.4, windowHeight * 0.9)) * 30}px)`
                         }}>
                             <h2 style={{
                                 fontSize: 'clamp(2rem, 7vw, 5rem)',
@@ -1332,37 +1373,38 @@
                             flexDirection: 'column',
                             alignItems: 'center',
                             gap: '1rem',
-                            opacity: getOpacity(windowHeight * 2, windowHeight * 3),
-                            transform: `translateY(${(1 - getOpacity(windowHeight * 2, windowHeight * 3)) * 30}px)`
+                            opacity: getOpacity(windowHeight * 0.9, windowHeight * 1.4),
+                            transform: `translateY(${(1 - getOpacity(windowHeight * 0.9, windowHeight * 1.4)) * 30}px)`
                         }}>
                             <p style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)', fontWeight: 900, fontStyle: 'italic', color: 'rgba(255,255,255,0.2)' }}>Cities evolved.</p>
                             <p style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)', fontWeight: 900, fontStyle: 'italic', color: 'rgba(255,255,255,0.5)' }}>Lifestyles upgraded.</p>
                             <p style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)', fontWeight: 900, fontStyle: 'italic', textDecoration: 'underline', textDecorationColor: '#3b82f6', textUnderlineOffset: '8px' }}>Air didn't.</p>
                         </div>
 
-                        {/* REEL 4: The Habit Reframe */}
+
+                        {/* REEL 5: The Tagline - Oxygen means YU */}
                         <div style={{
                             position: 'absolute',
                             textAlign: 'center',
                             transition: 'opacity 0.3s, transform 0.3s',
-                            opacity: getOpacity(windowHeight * 3, windowHeight * 4),
-                            transform: `translateY(${(1 - getOpacity(windowHeight * 3, windowHeight * 4)) * 30}px)`
+                            opacity: getOpacity(windowHeight * 1.4, windowHeight * 1.9),
+                            transform: `translateY(${(1 - getOpacity(windowHeight * 1.4, windowHeight * 1.9)) * 30}px)`
                         }}>
                             <h3 style={{
                                 fontSize: 'clamp(2rem, 6vw, 4rem)',
                                 fontWeight: 900,
                                 letterSpacing: '-0.05em',
                                 textTransform: 'uppercase',
-                                lineHeight: 1
+                                lineHeight: 1,
+                                fontStyle: 'italic'
                             }}>
-                                The final <br />biological upgrade.
+                                Oxygen means <br /><span style={{ color: '#3b82f6' }}>YU</span>.
                             </h3>
-                            <p className="animate-pulse" style={{ marginTop: '2rem', color: '#3b82f6', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.8em' }}>YU SYSTEM 01</p>
                         </div>
                     </div>
 
                     {/* SCROLL SPACER - Creates space for narrative slides to appear one by one */}
-                    <div style={{ height: '500vh', width: '100%', background: 'transparent' }} />
+                    <div style={{ height: '250vh', width: '100%', background: 'transparent' }} />
 
                     {/* THE REVEAL SECTION - ABOUT */}
                     <section id="about" style={{
@@ -1375,13 +1417,14 @@
                         justifyContent: 'center',
                         padding: '10rem 1.5rem',
                         position: 'relative',
-                        borderTop: '1px solid rgba(255,255,255,0.05)'
+                        borderTop: '1px solid rgba(255,255,255,0.05)',
+                        zIndex: 50
                     }}>
                         <div style={{ maxWidth: '80rem', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '6rem', alignItems: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                     <span style={{ color: '#3b82f6', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', fontSize: '10px' }}>Hardware // Batch 001</span>
-                                    <h2 style={{ fontSize: 'clamp(5rem, 12vw, 12rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 1, fontStyle: 'italic' }}>
+                                    <h2 style={{ fontSize: 'clamp(3rem, 10vw, 12rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 1, fontStyle: 'italic' }}>
                                         YU<span style={{ color: '#3b82f6' }}>.</span>
                                     </h2>
                                 </div>
@@ -1458,39 +1501,6 @@
                         </div>
                     </section>
 
-
-                    {/* THE PROTOCOL - HOW IT WORKS */}
-                    <section id="how-it-works" style={{ background: '#050505', padding: '10rem 1.5rem' }}>
-                        <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
-                            <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
-                                <h2 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 0.9, fontStyle: 'italic', marginBottom: '2rem' }}>
-                                    The <span style={{ color: '#3b82f6' }}>Protocol</span>
-                                </h2>
-                                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.25rem' }}>Simplicity by design. Two steps to atmosphere.</p>
-                            </div>
-
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', maxWidth: '50rem', margin: '0 auto' }}>
-                                {[
-                                    { step: "01", title: "Placement", desc: "Position the integrated mask-cap over your nose and mouth. The ergonomic seal aligns instantly.", Icon: Shield },
-                                    { step: "02", title: "Ignite", desc: "Press the trigger. Inhale deep. Feel the biological upgrade immediately.", Icon: Wind }
-                                ].map((item, i) => (
-                                    <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '2rem' }}>
-                                        <div style={{ position: 'relative' }}>
-                                            <div style={{ width: '5rem', height: '5rem', borderRadius: '50%', border: '1px solid rgba(59, 130, 246, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(59, 130, 246, 0.05)' }}>
-                                                <item.Icon style={{ width: '2rem', height: '2rem', color: '#3b82f6' }} />
-                                            </div>
-                                            <div style={{ position: 'absolute', top: -10, right: -10, fontSize: '0.875rem', fontWeight: 900, color: 'rgba(255,255,255,0.2)' }}>/ {item.step}</div>
-                                        </div>
-                                        <div>
-                                            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>{item.title}</h3>
-                                            <p style={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, maxWidth: '280px', margin: '0 auto' }}>{item.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
                     {/* WHO NEEDS YU - EDUCATIONAL SECTIONS */}
                     <section style={{ background: 'black', padding: '10rem 1.5rem', position: 'relative', overflow: 'hidden' }}>
                         <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
@@ -1501,7 +1511,7 @@
                                     Who Needs <span style={{ color: '#3b82f6' }}>YU?</span>
                                 </h2>
                                 <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: 'rgba(255,255,255,0.4)', maxWidth: '40rem', margin: '0 auto' }}>
-                                    Pure oxygen isn't just for emergencies. It's the biological upgrade your body has been waiting for.
+                                    Pure oxygen isn't just for emergencies. It's the upgrade your body has been waiting for.
                                 </p>
                             </div>
 
@@ -1721,6 +1731,114 @@
                         </div>
                     </section>
 
+                    {/* HOW IT WORKS SECTION */}
+                    <section id="how-it-works" style={{
+                        background: '#050505',
+                        padding: '10rem 1.5rem',
+                        position: 'relative',
+                        borderTop: '1px solid rgba(255,255,255,0.05)'
+                    }}>
+                        <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
+                            {/* Section Header */}
+                            <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+                                <span style={{ color: '#3b82f6', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', fontSize: '10px' }}>Simple // Effective</span>
+                                <h2 style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em', lineHeight: 0.9, fontStyle: 'italic', marginTop: '1rem' }}>
+                                    How It <span style={{ color: '#3b82f6' }}>Works.</span>
+                                </h2>
+                                <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.4)', maxWidth: '28rem', margin: '1.5rem auto 0' }}>
+                                    Pure oxygen in two effortless steps.
+                                </p>
+                            </div>
+
+                            {/* Two Steps */}
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem', alignItems: 'start' }}>
+
+                                {/* Step 1 */}
+                                <div style={{
+                                    textAlign: 'center',
+                                    padding: '3rem',
+                                    background: 'rgba(37,99,235,0.03)',
+                                    borderRadius: '2rem',
+                                    border: '1px solid rgba(255,255,255,0.05)'
+                                }}>
+                                    <div style={{
+                                        width: '5rem',
+                                        height: '5rem',
+                                        background: 'linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)',
+                                        borderRadius: '50%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        margin: '0 auto 2rem',
+                                        fontSize: '2rem',
+                                        fontWeight: 900,
+                                        fontStyle: 'italic'
+                                    }}>
+                                        1
+                                    </div>
+                                    <h3 style={{
+                                        fontSize: '1.5rem',
+                                        fontWeight: 900,
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '-0.02em',
+                                        marginBottom: '1rem'
+                                    }}>
+                                        Position & Press
+                                    </h3>
+                                    <p style={{
+                                        color: 'rgba(255,255,255,0.6)',
+                                        lineHeight: 1.7,
+                                        fontSize: '1rem'
+                                    }}>
+                                        Place the nozzle near your mouth and gently press the trigger to release pure oxygen.
+                                    </p>
+                                </div>
+
+                                {/* Step 2 */}
+                                <div style={{
+                                    textAlign: 'center',
+                                    padding: '3rem',
+                                    background: 'rgba(37,99,235,0.03)',
+                                    borderRadius: '2rem',
+                                    border: '1px solid rgba(255,255,255,0.05)'
+                                }}>
+                                    <div style={{
+                                        width: '5rem',
+                                        height: '5rem',
+                                        background: 'linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)',
+                                        borderRadius: '50%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        margin: '0 auto 2rem',
+                                        fontSize: '2rem',
+                                        fontWeight: 900,
+                                        fontStyle: 'italic'
+                                    }}>
+                                        2
+                                    </div>
+                                    <h3 style={{
+                                        fontSize: '1.5rem',
+                                        fontWeight: 900,
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '-0.02em',
+                                        marginBottom: '1rem'
+                                    }}>
+                                        Inhale Fresh
+                                    </h3>
+                                    <p style={{
+                                        color: 'rgba(255,255,255,0.6)',
+                                        lineHeight: 1.7,
+                                        fontSize: '1rem'
+                                    }}>
+                                        Take a deep breath and feel the difference. 99% pure oxygen for instant clarity and energy.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+
                     {/* FAQ SECTION */}
                     <section id="faq" style={{
                         background: '#050505',
@@ -1760,10 +1878,7 @@
                                     question="What's the science behind oxygen therapy?"
                                     answer="Oxygen is essential for cellular energy production (ATP synthesis). Supplemental oxygen may support faster muscle recovery by accelerating lactic acid clearance, enhance cognitive function by increasing cerebral blood flow, and support skin health through improved cellular regeneration. While research on recreational oxygen use is ongoing, many users report feeling more energized and focused."
                                 />
-                                <FAQItem
-                                    question="How do I use YU?"
-                                    answer="It's simple: 1) Remove the cap, 2) Place the mask over your nose and mouth, 3) Press the trigger and breathe deeply, 4) Take 5-10 deep breaths as needed. Use YU before workouts for enhanced performance, after exercise for faster recovery, during stressful moments for calm, or anytime you need a mental boost."
-                                />
+
                                 <FAQItem
                                     question="Is this suitable for children or elderly?"
                                     answer="YU is designed for healthy adults. For children under 18 or elderly individuals with health conditions, please consult a healthcare provider before use. Supplemental oxygen can be beneficial across age groups, but individual health status should always be considered."
@@ -1772,29 +1887,10 @@
                                     question="Will I become dependent on it?"
                                     answer="No. YU provides supplemental oxygen, not replacement oxygen. Your body will continue to breathe regular air normally. Think of it like a vitamin supplement—it enhances your baseline, but doesn't replace your body's natural functions. You can use it as needed without developing dependence."
                                 />
-                                <FAQItem
-                                    question="Can I travel with YU?"
-                                    answer="Yes! YU canisters are portable and TSA-compliant for air travel (check current airline regulations). They're perfect for high-altitude destinations, long flights, or travel to polluted cities. Many users pack YU for mountain trips to prevent altitude sickness."
-                                />
-                                <FAQItem
-                                    question="What's your return policy?"
-                                    answer="We offer a 30-day satisfaction guarantee. If you're not completely satisfied with YU, contact our support team for a full refund. We're confident you'll feel the difference, but we want you to try it risk-free. Note: For hygiene reasons, opened canisters cannot be resold but are eligible for refund."
-                                />
+
                             </div>
 
-                            {/* Still Have Questions CTA */}
-                            <div style={{ marginTop: '6rem', padding: '3rem', background: 'linear-gradient(135deg, rgba(37,99,235,0.1) 0%, transparent 100%)', borderRadius: '2rem', border: '1px solid rgba(37,99,235,0.2)', textAlign: 'center' }}>
-                                <h3 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '1rem' }}>Still have questions?</h3>
-                                <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '2rem' }}>Our AI assistant can help you learn more about YU and find the perfect usage plan for your lifestyle.</p>
-                                <button
-                                    onClick={() => document.querySelector('.chatbot-window').classList.add('active')}
-                                    style={{ padding: '1rem 2rem', background: '#2563eb', color: 'white', border: 'none', borderRadius: '9999px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.875rem', cursor: 'pointer', transition: 'all 0.3s' }}
-                                    onMouseOver={(e) => { e.target.style.background = '#1d4ed8'; e.target.style.transform = 'scale(1.05)'; }}
-                                    onMouseOut={(e) => { e.target.style.background = '#2563eb'; e.target.style.transform = 'scale(1)'; }}
-                                >
-                                    Ask Our AI Assistant
-                                </button>
-                            </div>
+
                         </div>
                     </section>
 
@@ -1828,7 +1924,59 @@
                                 <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: 'clamp(10px, 1vw, 12px)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.6em' }}>
                                     Batch 001 Reservation Database
                                 </p>
+
+                                {/* Limited Batch Urgency Banner */}
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    gap: '1rem',
+                                    marginTop: '1.5rem',
+                                    padding: '1.5rem 2rem',
+                                    background: 'linear-gradient(135deg, rgba(239,68,68,0.1) 0%, rgba(37,99,235,0.1) 100%)',
+                                    border: '1px solid rgba(239,68,68,0.3)',
+                                    borderRadius: '1rem'
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                        <span style={{
+                                            display: 'inline-block',
+                                            width: '10px',
+                                            height: '10px',
+                                            background: '#ef4444',
+                                            borderRadius: '50%',
+                                            animation: 'pulse 2s infinite'
+                                        }} />
+                                        <span style={{
+                                            color: '#ef4444',
+                                            fontWeight: 900,
+                                            textTransform: 'uppercase',
+                                            letterSpacing: '0.15em',
+                                            fontSize: '0.875rem'
+                                        }}>
+                                            Limited Edition
+                                        </span>
+                                    </div>
+                                    <p style={{
+                                        color: 'white',
+                                        fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
+                                        fontWeight: 900,
+                                        fontStyle: 'italic',
+                                        letterSpacing: '-0.02em'
+                                    }}>
+                                        Only <span style={{ color: '#3b82f6' }}>1,000 Units</span> Available
+                                    </p>
+                                    <p style={{
+                                        color: 'rgba(255,255,255,0.6)',
+                                        fontSize: '0.8rem',
+                                        maxWidth: '24rem',
+                                        lineHeight: 1.6
+                                    }}>
+                                        Batch 001 is exclusively reserved for members who pre-book and show interest.
+                                        Once filled, registration closes until Batch 002.
+                                    </p>
+                                </div>
                             </div>
+
 
                             {!isReserved ? (
                                 <form onSubmit={handleSubmit} style={{
@@ -2180,8 +2328,7 @@
                         </div>
                     </footer>
 
-                    {/* Chatbot Widget */}
-                    <Chatbot />
+
                 </div>
             );
         };
