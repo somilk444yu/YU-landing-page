@@ -402,9 +402,81 @@
             color: #3b82f6;
         }
 
+        /* MOBILE MENU STYLES */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            z-index: 102;
+            padding: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 101;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu-overlay.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-link {
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-overlay.active .mobile-nav-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger animation delays for links */
+        .mobile-menu-overlay.active .mobile-nav-link:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .mobile-menu-overlay.active .mobile-nav-link:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .mobile-menu-overlay.active .mobile-nav-link:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .mobile-menu-overlay.active .mobile-nav-link:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
             }
         }
 
@@ -715,13 +787,49 @@
                 <a href="#faq" class="nav-link">FAQ</a>
             </nav>
 
-            <a href="#prebook"
-                style="color: white; text-decoration: none; font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.75rem 1.5rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 9999px; transition: all 0.3s; display: inline-block;"
-                onmouseover="this.style.background='#2563eb'; this.style.borderColor='#2563eb';"
-                onmouseout="this.style.background='transparent'; this.style.borderColor='rgba(255,255,255,0.2)';">Reserve
-                Now</a>
+            <div style="display: flex; align-items: center;">
+                <a href="#prebook"
+                    style="color: white; text-decoration: none; font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.75rem 1.5rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 9999px; transition: all 0.3s; display: inline-block;"
+                    onmouseover="this.style.background='#2563eb'; this.style.borderColor='#2563eb';"
+                    onmouseout="this.style.background='transparent'; this.style.borderColor='rgba(255,255,255,0.2)';">Reserve
+                    Now</a>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <a href="#about" class="mobile-nav-link" onclick="toggleMobileMenu()">About</a>
+        <a href="#benefits" class="mobile-nav-link" onclick="toggleMobileMenu()">Benefits</a>
+        <a href="#how-it-works" class="mobile-nav-link" onclick="toggleMobileMenu()">How It Works</a>
+        <a href="#faq" class="mobile-nav-link" onclick="toggleMobileMenu()">FAQ</a>
+        <button class="mobile-menu-btn" style="position: absolute; top: 1.5rem; right: 2rem; display: block;"
+            onclick="toggleMobileMenu()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+    </script>
 
     <div id="root"></div>
 
